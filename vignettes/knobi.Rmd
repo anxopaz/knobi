@@ -467,7 +467,7 @@ env <- list( climate_1 = data.frame( AMO=c(0.2,0.2,0.3,0.3,0.4),
              climate_2 = data.frame( AMO=c(0.2,0.3,0.4,0.5,0.6),
                                      Tmax=c(19,20,21,22,23)))
 
-multiproj <- knobi_proj( hake_n_results, hake_n_multi, Ct=Ct[1:5,], env=env)
+multiproj <- knobi_proj( hake_n_results, hake_n_multi, Ct=Ct, env=env)
 ```
 
 
