@@ -1,3 +1,4 @@
+
 kbpm_fit <- function(Data, env = NULL, pella = TRUE, model = "Base") {
 
   data <- Data$data
