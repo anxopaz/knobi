@@ -1,0 +1,19 @@
+Package: knobi
+Type: Package
+Title: Known-Biomass Production Model (KBPM)
+Version: 0.1.0
+Authors@R: c(person("Anxo", "Paz", email = "anxo.paz@ieo.csic.es", role = c("aut", "cre")),
+  person("Marta", "Cousido Rocha", email = "marta.cousido@ieo.csic.es", role = c("aut", "ths")),
+  person("Santiago", "Cervino Lopez", email = "santiago.cervino@ieo.csic.es", role = c("aut", "ths")),
+  person("Maria Grazia", "Peninno", email = "grazia.pennino@ieo.csic.es", role = c("aut")))
+Description: Application of a KBPM (Known Biomass Production Model): (1) the fitting of KBPM to each stock; (2) the estimation of the effects of environmental variability; (3) the retrospective analysis to identify regime shifts; (4) the estimation of forecasts.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+Imports: corrplot, ggplot2, gridExtra, grDevices,  optimx, plot3D, stats, dplyr, tidyr
+RoxygenNote: 7.3.1
+Suggests: 
+    knitr,
+    rmarkdown,
+    icesSAG
+VignetteBuilder: knitr, rmarkdown
