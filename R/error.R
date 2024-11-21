@@ -44,6 +44,12 @@ kbpm_error <- function( knobi_results, env_results=NULL, plot_out) {
                      plot.subtitle = ggplot2::element_text(hjust = 0.5),legend.title=ggplot2::element_blank(),
                      legend.background = ggplot2::element_rect(fill = "transparent"))
 
+    if (plot_out==TRUE){
+      p <- grDevices::recordPlot()
+      grDevices::jpeg("residuals.jpeg",width=2500, height=2500,res=300)
+      grDevices::replayPlot(p)
+      grDevices::dev.off()}
+
   } else {
 
     base_model<-c(ser_b,r2_b,r2_adj_b,AIC_b, RMSE_b, MAPE_b, NA, NA)
@@ -119,17 +125,17 @@ kbpm_error <- function( knobi_results, env_results=NULL, plot_out) {
                      plot.subtitle = ggplot2::element_text(hjust = 0.5),legend.title=ggplot2::element_blank(),
                      legend.background = ggplot2::element_rect(fill = "transparent"))
 
+    if (plot_out==TRUE){
+      p <- grDevices::recordPlot()
+      grDevices::jpeg("residuals_env.jpeg",width=2500, height=2500,res=300)
+      grDevices::replayPlot(p)
+      grDevices::dev.off()}
+
   }
 
   error<-list(error_table=error_table,residuals=residuals)
 
   print(res_plot)
-
-  if (plot_out==TRUE){
-    p <- grDevices::recordPlot()
-    grDevices::jpeg("res_env.jpeg",width=2500, height=2500,res=300)
-    grDevices::replayPlot(p)
-    grDevices::dev.off()}
 
   return(error)
 
