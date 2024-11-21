@@ -47,7 +47,7 @@ Projection of future population and fishery dynamics is carried out for a given 
 # (ii) last historical catch multiplied by 1.2 and
 # (iii) last historical catch multiplied by 0.8.
 
-catch<-rep(knobi_results$data$Catch[length(knobi_results$data$Catch)],8)
+catch<-rep(knobi_results$df$C[length(knobi_results$df$C)],5)
 
 Ct<-data.frame(catch=catch,
               catch08=0.8*catch,
@@ -74,13 +74,6 @@ env<-data.frame(Tmax_cte=c(19,19,19,19,19),
                Tmax_05=c(19,19.5,20,20.5,21),
                Tmax_1=c(19,20,21,22,23))
 
-catch<-rep(knobi_results$data$Catch[length(knobi_results$data$Catch)],5)
-
-Ct<-data.frame(catch=catch,
-              catch08=0.8*catch,
-              catch12=1.2*catch)
-
-
 # Based on the previous objects we can apply the projection function.
 
 knobi_proj(knobi_results, knobi_environmental, Ct=Ct, env=env)
@@ -92,7 +85,7 @@ knobi_proj(knobi_results, knobi_environmental, Ct=Ct, env=env)
 # The scenarios presented below have been created from the estimated F_msy of
 # knobi_fit analysis.
 
-fmsy<-knobi_results$fit$RP$F_MSY
+fmsy<-knobi_results$BRPs['F_MSY']
 ff<-rep(fmsy,8)
 f<-data.frame(f=ff,f12=ff*1.2,f08=ff*0.8)
 
@@ -101,9 +94,7 @@ knobi_proj(knobi_results, f=f)
 
 ### Through fishing mortality with environmental information
 
-ff<-rep(fmsy,5)
-f<-data.frame(f=ff,f12=ff*1.2,f08=ff*0.8)
-knobi_proj(knobi_results, f=f, env_results=env_results, env=env)
+knobi_proj(knobi_results, f=f[1:5,], env_results=env_results, env=env)
 
 
 # In case of multicovar<-TRUE in knobi_env, a list is required in which
@@ -114,7 +105,7 @@ env<-list(climate_1=data.frame(AMO=c(0.2,0.2,0.3,0.3,0.4),
           climate_2=data.frame(AMO=c(0.2,0.3,0.4,0.5,0.6),
                               Tmax=c(19,20,21,22,23)))
 
-knobi_proj(knobi_results, knobi_environmental2, Ct=Ct[1:5,], env=env)
+knobi_proj(knobi_results, knobi_environmental2, Ct=Ct, env=env)
 }
 
 }

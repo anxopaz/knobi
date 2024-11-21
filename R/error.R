@@ -43,6 +43,12 @@ kbpm_error <- function( knobi_results, env_results=NULL, plot_out) {
       ggplot2::theme(legend.position = c(0.15,0.85), plot.title = ggplot2::element_text(hjust = 0.5),
                      plot.subtitle = ggplot2::element_text(hjust = 0.5),legend.title=ggplot2::element_blank(),
                      legend.background = ggplot2::element_rect(fill = "transparent"))
+    
+    if (plot_out==TRUE){
+      p <- grDevices::recordPlot()
+      grDevices::jpeg("residuals.jpeg",width=2500, height=2500,res=300)
+      grDevices::replayPlot(p)
+      grDevices::dev.off()}
 
   } else {
 
@@ -118,6 +124,12 @@ kbpm_error <- function( knobi_results, env_results=NULL, plot_out) {
       ggplot2::theme(legend.position = c(0.15,0.85), plot.title = ggplot2::element_text(hjust = 0.5),
                      plot.subtitle = ggplot2::element_text(hjust = 0.5),legend.title=ggplot2::element_blank(),
                      legend.background = ggplot2::element_rect(fill = "transparent"))
+    
+    if (plot_out==TRUE){
+      p <- grDevices::recordPlot()
+      grDevices::jpeg("residuals_env.jpeg",width=2500, height=2500,res=300)
+      grDevices::replayPlot(p)
+      grDevices::dev.off()}
 
   }
 
@@ -125,11 +137,6 @@ kbpm_error <- function( knobi_results, env_results=NULL, plot_out) {
 
   print(res_plot)
 
-  if (plot_out==TRUE){
-    p <- grDevices::recordPlot()
-    grDevices::jpeg("res_env.jpeg",width=2500, height=2500,res=300)
-    grDevices::replayPlot(p)
-    grDevices::dev.off()}
 
   return(error)
 
