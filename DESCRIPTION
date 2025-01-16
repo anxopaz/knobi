@@ -11,7 +11,7 @@ License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Imports: corrplot, ggplot2, gridExtra, grDevices,  optimx, plot3D, stats, dplyr, tidyr
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Suggests: 
     knitr,
     rmarkdown,
