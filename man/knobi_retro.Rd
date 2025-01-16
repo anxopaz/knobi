@@ -8,30 +8,31 @@
 
 \item{nR}{Number of retrospective patterns. 5 by default. See details.}
 
-\item{yR}{Optional. Vector of catch time series final years in each one of the retrospective models. See details.}
+\item{yR}{Optional. A vector representing the final years of the catch time series for each of the retrospective models. See details.}
 
-\item{yR0}{Optional. Vector of catch time series starting years in each one of the retrospective models. The same length of 'yR' vector is required. By default, the catch time series is assumed to start in the same year as in the original fit.}
+\item{yR0}{Optional. A vector representing the starting years of the catch time series for each of the retrospective models. This vector must be the same length as the yR vector. By default, the catch time series is assumed to start in the same year as the original fit.}
 
-\item{env_results}{Optional. A list containing the results of the environmental KBPM fit. Object provided by \code{\link{knobi_env}} function.}
+\item{env_results}{Optional. A list containing the results of the environmental KBPM fit. Object provided by \code{\link{knobi_env}} function. If this argument is provided, the retrospective analysis is carried out for the base and the environmental KBPM models.}
 
-\item{plot_out}{Logical. TRUE means that a file with the plot of the retrospective fits is created. The default value is the input in the \code{\link{knobi_fit}} function.}
+\item{plot_out}{Logical. If TRUE, a file containing the plot of the retrospective fits is created. The default value is the input in the \code{\link{knobi_fit}} function.}
 
-\item{plot_dir}{Optional. Directory to create the folder and save the plots. Required when 'plot_out=TRUE'. The default value is the input in the \code{\link{knobi_fit}} function.}
+\item{plot_dir}{Optional. Directory to create the folder and save the plots. Required when 'plot_out=TRUE'. The default value is taken from the input of the \code{\link{knobi_fit}} function.}
 
-\item{plot_filename}{Optional. Name of the folder that will contain the plots. Required when 'plot_out=TRUE'. The default value is the input in the \code{\link{knobi_fit}} function.}
+\item{plot_filename}{Optional. Name of the folder that will contain the plots. Required when 'plot_out=TRUE'. The default value is taken from the input of the \code{\link{knobi_fit}} function.}
 }
 \value{
-A list containing the retrospective analysis: parameter estimates and reference points for each one of the models.
-The estimated surplus production curves from the retrospective analysis are plotted. The plot is displayed in the plot window and saved (if plot_out=TRUE) in the provided directory or in the current directory.
+A list containing the results of the retrospective analysis, including parameter estimates and reference points for each model. The estimated surplus production curves from the retrospective analysis are also plotted, with a panel where each graph represents the curves for each model in case of considering environmental models. The plot is displayed in the plot window and saved (if plot_out=TRUE) in the specified directory or in the current directory.
 }
 \description{
 This function performs a retrospective analysis that evaluates the robustness of the KBPM fit to the systematic deletion of recent data.
 }
 \details{
 There are different options for defining retrospective fits:
-(1) Usage of 'nR' argument. This argument specifies the number of retrospective patterns. Furthermore, it is implicit in the use of this argument that the retrospective patterns will consist of the systematic deletion of the last year of data up to the number of years determined by 'nR'.
-(2) Usage of 'yR' argument. This argument specifies the catch time series final years in each one of the retrospective models, which allows greater flexibility by being able to choose the year from which we delete information. Then, the number of retrospective patterns will be the length of the vector 'yR'. In this option it is possible to set different starting years for the respective time series final years through the argument 'yR0'.
-If both arguments are provided, the package will use 'yR'.
+(1) Usage of 'nR' argument. This argument specifies the number of retrospective patterns. By using this argument, it is implied that the retrospective fits will consist of systematically deleting the last year of data, up to the number of years specified by 'nR'.
+(2) Usage of 'yR' argument. This argument specifies the final years of the catch time series for each of the retrospective models, providing greater flexibility in choosing the years from which to delete information. The number of retrospective fits will correspond to the length of the 'yR' vector. Additionally, different starting years can be set using the 'yR0' argument. 
+If both arguments, 'nR' and yR, are provided, the package will prioritize the use of 'yR'.
+
+In the case of the environmental models, both the estimated biological reference points and the plotted production curve correspond to a value of the scaled environmental variable equal to the mean of the time series, i.e. \eqn{X_{t}=0}, which cancels out the environmental effect in the equations defining both models. For more details, such as the calculation of BRPs as a function of the environmental variable, see vignettes.
 }
 \examples{
 

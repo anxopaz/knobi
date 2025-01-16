@@ -1,4 +1,4 @@
-#' @title Known Biomass Production Model (KBPM) fit
+#' @title KBPM fit
 #'
 #' @name knobi_fit
 #'
@@ -16,29 +16,29 @@
 #' \item MSY: Maximum Sustainable Yield.
 #' \item F_MSY: fishing mortality at MSY.
 #' \item B_MSY: biomass at MSY (or SSB at MSY depending on the value of the 'method' argument, see control list).
-#' \item K: virgin biomass.}}
+#' \item K: carrying capacity.}}
 #' @param control A list containing the following control parameters. \itemize{
-#' \item pella: Logical. TRUE means that Pella-Tomlinson model is used whereas FALSE means that Schaefer model is fitted (by default). See details.
-#' \item start_r: optional. Start value of the growth rate model parameter 'r' (i.e. intrinsic rate of natural increase). See details.
-#' \item start_K: optional. Start value of the carrying capacity model parameter 'K' (the maximum population size for growth to be positive). See details.
-#' \item start_p: optional. Start value of the shape model parameter 'p'. Used for Pella-Tomlinson model. See details.
-#' \item method: sets whether the fit is carried using 'SSB' or 'Biomass'. This argument is only required if both time series, 'SSB' and 'Biomass', are provided.}
-#' @param plot_out Logical. TRUE means that files are created with the input time series plots and the fitting results. FALSE by default.
+#' \item pella: pella: logical. If TRUE, the Pella-Tomlinson model is applied; if FALSE (default), the Schaefer model is used. See details.
+#' \item start_r: optional. Starting value for the growth rate parameter r (intrinsic rate of natural increase). See details.
+#' \item start_K: optional. Starting value for the carrying capacity parameter K (maximum population size where growth remains positive). See details.
+#' \item start_p: optional. Starting value for the shape parameter p, used exclusively in the Pella-Tomlinson model. See details.
+#' \item method: Specifies whether the model is fitted using 'SSB' (spawning stock biomass) or 'Biomass'. This argument is only required if both time series, 'SSB' and 'Biomass', are provided.}
+#' @param plot_out Logical. If TRUE, files are generated with plots for both the input time series and the fitting results. Defaults to FALSE.
 #' @param plot_dir Optional. Directory for saving the plot files. Required when plot_out=TRUE. Current directory by default.
 #' @param plot_filename Optional. Name of the folder that will contain the plot files. By default, "knobi_results". Required when plot_out=TRUE.
 #'
 #'
-#' @return The list of the results of the KBPM fit contains: \itemize{
+#' @return The results of the KBPM fit include the following: \itemize{
 #' \item params: model parameters estimates.
 #' \item df: the data used for the model.
 #' \item BRPs: biological reference points estimates: \itemize{
-#' \item K: virgin biomass.
+#' \item K: carrying capacity.
 #' \item MSY: maximum sustainable yield (MSY).
 #' \item B_MSY: biomass at MSY.
 #' \item F_MSY: fishing mortality at MSY.
 #' \item MSYoverK: ratio of MSY and K.}
 #' \item residuals: Pearson's residuals calculated as (observations-estimates)/sd(observations).
-#' \item error_table: data frame of accuracy and model performance measures: \itemize{
+#' \item performance_metrics: data frame of accuracy and model performance measures: \itemize{
 #' \item SER: standard error of the regression, calculated as the root of the rate between the sum of residual squares and the degrees of freedom of the regression.
 #' \item R-squared: coefficient of determination.
 #' \item adj-R-squared: adjusted coefficient of determination.
@@ -65,22 +65,22 @@
 #'
 #' @details The KBPMs implemented in the current package are explained below.
 #' Schaefer model (1954) (1):
-#' \deqn{SP_{t} = r B_{t} (1-(B_{t}/K))}
-#' where \eqn{SP_{t}} is the surplus production, \eqn{B_{t}} is the biomass or SSB averaged (mean of two consecutive years), \eqn{r} is the population growth rate parameter, and \eqn{K} is the virgin biomass. The subscript \eqn{t} denotes the time (years).
+#' \deqn{SP_{t} = r \overline{B}_{t} (1-(\overline{B}_{t}/K))}
+#' where \eqn{SP_{t}} is the surplus production, \eqn{\overline{B}_{t}} is the average biomass or SSB (mean of two consecutive years), \eqn{r} is the population growth rate parameter, and \eqn{K} is the carrying capacity. The subscript \eqn{t} denotes the time (years).
 #' Pella and Tomlinson model (1969) (2):
-#' \deqn{SP_{t} = (r/p) B_{t} (1-(B_{t}/K)^{p})}
-#' where \eqn{SP_{t}} is the surplus production, \eqn{B_{t}} is the biomass or SSB averaged,  \eqn{r} is the population growth rate parameter, \eqn{K} is the virgin biomass and \eqn{p} is the asymmetry parameter. The subscript \eqn{t} denotes the time (years).
+#' \deqn{SP_{t} = (r/p) \overline{B}_{t} (1-(\overline{B}_{t}/K)^{p})}
+#' where \eqn{SP_{t}} is the surplus production, \eqn{\overline{B}_{t}} is the average biomass or SSB,  \eqn{r} is the population growth rate parameter, \eqn{K} is the carrying capacity and \eqn{p} is the asymmetry parameter. The subscript \eqn{t} denotes the time (years).
 #'
-#' The recruitment values, F_input estimates and F_type argument are included to get an overview of the stock status, but are not needed for the KBPM fitting. Similarly, the input reference points are only used for comparison purposes.
+#' The recruitment values and the F_input estimates are included to get an overview of the stock status, but are not needed for the KBPM fitting. Similarly, the input reference points are only used for comparison purposes.
 #'
-#' KBPMs have also proven their usefulness for the multispecies management objectives. More precisely, KBPM approach can be applied to analyze the dynamic of the total aggregated biomass and catch of all targeted fish species in a community, defining in this way a simple data-limited ecosystem model to assess the ecosystem status (see example).
+#' KBPMs have also proven their usefulness for the multispecies management objectives. The KBPM approach can be applied to analyze the joint dynamics of the targeted fish species within a community, using the aggregated biomass and catch data, defining in this way a simple data-limited ecosystem model to assess the ecosystem status (see example).
 #'
 #' @examples
 #'
 #' library(knobi)
 #'
-#' data( knobi_data)
-#' hake_n <- knobi_data$hake_n
+#' data(knobi_dataset)
+#' hake_n <- knobi_dataset$hake_n
 #'
 #'
 #' # Then, create the data object.
@@ -93,7 +93,7 @@
 #' # ICES. 2021. Working Group for the Bay of Biscay and the Iberian Waters Ecoregion
 #' # (WGBIE). ICES Scientific Reports. 3:48.1101 pp.
 #' data$RP<-list(F_MSY=0.259, B_MSY=207398, MSY=75052, K=NA)
-#' # In this case, B_MSY is equal to SSB_MSY, since control$method<-"SSB"
+#' # In this case, B_MSY corresponds to SSB_MSY, since control$method<-"SSB"
 #' # (see control list below).
 #' data$years<-hake_n$Year    # Years corresponding to the catch values
 #' # (can be different than the years corresponding to SSB or biomass).
@@ -102,8 +102,8 @@
 #' # Now we define the control.
 #'
 #' control<-list(
-#'   pella = "TRUE")   # Logical. T means that the Pella-Tomlinson model is used.
-#'                     #          F means that the Schaefer model is employed.
+#'   pella = "TRUE")   # Logical. TRUE for Pella-Tomlinson model.
+#'                     #          FALSE for Schaefer model.
 #'
 #' # Finally, we can fit the model
 #'
@@ -111,16 +111,16 @@
 #' knobi_results
 #'
 #'
-#' #### Fitting multispecific KBPM
+#' ## Fitting multispecific KBPM
 #'
 #' # Below, a multistock approximation aggregating the
 #' # northern and southern stocks of sardine is performed.
 #'
 #' # Firstly, read southern stock data
-#' sardine1 <- knobi_data$sardine_s
+#' sardine1 <- knobi_dataset$sardine_s
 #'
 #' # Secondly, read northern stock data
-#' sardine2 <- knobi_data$sardine_n
+#' sardine2 <- knobi_dataset$sardine_n
 #'
 #' # Extract common years of data in both stocks
 #' index <- which(sardine1$Year %in% sardine2$Year)
@@ -144,13 +144,16 @@
 #'
 #'
 #' @references
+#' 
 #' Schaefer, M.B. (1954). Some Aspects of the Dynamics of Populations Important to the Management of the Commercial Marine Fisheries. Bulletin of the Inter-American Tropical Tuna Commission. 1:26-56.
+#' 
 #' Pella, J.J., Tomlinson, P.K. (1969). A generalized stock-production model. Bulletin of the Inter-American Tropical Tuna Commission. 13:421–58.
+#' 
 #' MacCall, A. (2002). Use of Known-Biomass Production Models to Determine Productivity of West Coast Groundfish Stocks. North American Journal of Fisheries Management, 22, 272-279.
 #'
 #' @export
 
-utils::globalVariables(c("y", "f", "f_factor","fr","b","br","b_factor"))
+utils::globalVariables(c("y","f","fr","b","br","bry","msyt","f_factor","b_factor","fr_factor","br_factor"))
 
 knobi_fit <- function( data, control=NULL, plot_out=FALSE, plot_filename=NULL, plot_dir=NULL){
 
@@ -288,12 +291,12 @@ knobi_fit <- function( data, control=NULL, plot_out=FALSE, plot_filename=NULL, p
 
   df_aux<-data.frame(av,bv)
   if(control$method=="Biomass"){
-    xtit<-"SP curve and observed Biomass and SP"
+    xtit<-"Surplus Production Curve and Observed Biomass and SP"
     xaxis<-"Biomass"
     xleg<-"Observed biomass"
   } else {
-    xtit<-"SP curve and observed SSB and SP"
-    xaxis<-"Spawning Biomass (SSB)"
+    xtit<-"Surplus Production Curve and Observed SSB and SP"
+    xaxis<-"SSB"
     xleg<-"Observed SSB"
   }
 
@@ -307,7 +310,7 @@ knobi_fit <- function( data, control=NULL, plot_out=FALSE, plot_filename=NULL, p
         label=Year), vjust=-1, show.legend = FALSE) +
     ggplot2::geom_point(data=df,ggplot2::aes(x=x,y=y,color=Year)) +
     ggplot2::geom_path(data=df,ggplot2::aes(x=x,y=y,color=Year)) +
-    ggplot2::labs(title=xtit,x =xaxis, y = "Surplus Production (SP)") +
+    ggplot2::labs(title=xtit,x =xaxis, y = "SP") +
     ggplot2::guides(size="none",col=ggplot2::guide_legend(title=xleg)) +
     ggplot2::scale_color_gradient(breaks=c(Year[1],Year[length(Year)])) +
     ggplot2::theme(legend.position = c(.9,.85), legend.background = ggplot2::element_rect(fill = "transparent"),
@@ -328,7 +331,7 @@ knobi_fit <- function( data, control=NULL, plot_out=FALSE, plot_filename=NULL, p
 
 
   df$C <- C
-  df$FM <- data$F_output
+  df$`F` <- data$F_output
   df$base <- predict_model( fit, df$x, pella, 'Base')
 
   fit$df <- df
@@ -344,9 +347,9 @@ knobi_fit <- function( data, control=NULL, plot_out=FALSE, plot_filename=NULL, p
          label=Year,vjust=-1), show.legend = FALSE) +
     ggplot2::geom_point(data=df,ggplot2::aes(x=x,y=C,color=Year)) +
     ggplot2::geom_path(data=df,ggplot2::aes(x=x,y=C,color=Year)) +
-    ggplot2::labs(title="SP curve and observed catch and SP",
-                  x ="Spawning Biomass (SSB)", y = "Surplus Production (SP)") +
-    ggplot2::guides(size="none",col=ggplot2::guide_legend(title="Observed catch")) +
+    ggplot2::labs(title="Surplus Production Curve and Observed Catch and SP",
+                  x =xaxis, y = "SP") +
+    ggplot2::guides(size="none",col=ggplot2::guide_legend(title="Observed Catch")) +
     ggplot2::scale_color_gradient(breaks=c(Year[1],Year[length(Year)])) +
     ggplot2::theme(legend.position = c(.9,.85), legend.background = ggplot2::element_rect(fill = "transparent"),
                    plot.title = ggplot2::element_text(hjust = 0.5), plot.subtitle = ggplot2::element_text(hjust = 0.5))
@@ -394,27 +397,36 @@ knobi_fit <- function( data, control=NULL, plot_out=FALSE, plot_filename=NULL, p
   max_br<-max(c(Brel_inp,Brel_out,1.1),na.rm = TRUE)
   min_br<-min(c(Brel_inp,Brel_out,0.9),na.rm = TRUE)
 
-  if(control$method=="SSB"){bfac<-c(rep("SSB from KBPM",length(Year)),rep("original SSB",length(Year)))
-  } else {bfac<-c(rep("B from KBPM",length(Year)),rep("original B",length(Year)))}
+  if(control$method=="SSB"){
+    bfac<-c(rep("SSB",length(Year)),rep("input SSB",length(Year)))
+    brfac<-c(rep("SSB/SSBmsy",length(Year)),rep("SSB/SSBmsy_input",length(Year)))
+  } else {
+    bfac<-c(rep("B",length(Year)),rep("input B",length(Year)))
+    brfac<-c(rep("B/Bmsy",length(Year)),rep("B/Bmsy_input",length(Year)))}
 
   if(control$method=="SSB"){
-    btit<-"Spawning Biomass (SSB) over time"
-    baxis<-"Spawning biomass (SSB)"
-    Brtit<-"Relative SSB over time"} else {
-      btit<-"Biomass over time"
+    btit<-"Spawning Stock Biomass (SSB)"
+    baxis<-"SSB"
+    Brtit<-"Relative SSB (SSB/SSBmsy)"
+    bry<-"SSB/SSBmsy"
+    msyt<-"SSBmsy"} else {
+      btit<-"Biomass"
       baxis<-"Biomass"
-      Brtit<-"Relative Biomass over time"}
+      Brtit<-"Relative Biomass (B/Bmsy)"
+      bry<-"B/Bmsy"
+      msyt<-"Bmsy"}
 
 
   plot_df<-data.frame(Year=rep(Year,2),f=c(F_out,F_inp),fr=c(Frel_out,Frel_inp),
-                      f_factor=c(rep("F from KBPM",length(Year)),rep("original F",length(Year))),
-                      b=rep(B_aver,2),br=c(Brel_out,Brel_inp),b_factor=bfac)
+                      f_factor=c(rep("F",length(Year)),rep("input F",length(Year))),
+                      fr_factor=c(rep("F/Fmsy",length(Year)),rep("input F/Fmsy",length(Year))),
+                      b=rep(B_aver,2),br=c(Brel_out,Brel_inp),b_factor=bfac,br_factor=brfac)
 
 
   f_plot<-ggplot2::ggplot(data=subset(plot_df,!is.na(plot_df$f)),ggplot2::aes(x=Year,y=f,color=f_factor)) +
     ggplot2::theme_bw() + ggplot2::geom_line() + ggplot2::geom_point() +
     ggplot2::ylim(min_f,max_f) +
-    ggplot2::labs(title="Fishing Mortality (F) over time",y = "Fishing mortality (F)") +
+    ggplot2::labs(title="Fishing Mortality (F)",y = "F") +
     ggplot2::geom_hline(yintercept=c(Fmsy,Fmsy_inp),linetype="dashed",
                         color = c("#F8766D","#00BFC4"), na.rm=T) +
     ggplot2::annotate("text",x=Year[length(Year)]-1,y=Fmsy,label="Fmsy (KBPM)",
@@ -425,7 +437,7 @@ knobi_fit <- function( data, control=NULL, plot_out=FALSE, plot_filename=NULL, p
 
   if(!is.na(Fmsy_inp)){
     f_plot <- f_plot +
-      ggplot2::annotate("text",x=Year[1]+1,y=Fmsy_inp,label="original Fmsy",color = "#00BFC4",na.rm=T,size=3,vjust=-1)
+      ggplot2::annotate("text",x=Year[1]+1,y=Fmsy_inp,label="input Fmsy",color = "#00BFC4",na.rm=T,size=3,vjust=-1)
   }
 
   print(f_plot)
@@ -439,10 +451,10 @@ knobi_fit <- function( data, control=NULL, plot_out=FALSE, plot_filename=NULL, p
 
   # F over years (relative)
 
-  fr_plot<-ggplot2::ggplot(data=subset(plot_df,!is.na(plot_df$fr)),ggplot2::aes(x=Year,y=fr,color=f_factor)) +
+  fr_plot<-ggplot2::ggplot(data=subset(plot_df,!is.na(plot_df$fr)),ggplot2::aes(x=Year,y=fr,color=fr_factor)) +
     ggplot2::theme_bw() + ggplot2::geom_line() + ggplot2::geom_point() +
     ggplot2::ylim(min_fr,max_fr) + ggplot2::geom_hline(yintercept=1) +
-    ggplot2::labs(title="Relative Fishing Mortality (F) over time",y = "Fishing mortality (F)") +
+    ggplot2::labs(title="Relative Fishing Mortality (F/Fmsy)",y = "F/Fmsy") +
     ggplot2::guides(col=ggplot2::guide_legend(title="")) +
     ggplot2::theme(legend.position = c(.9,.95), legend.background = ggplot2::element_rect(fill = "transparent"),
                    plot.title = ggplot2::element_text(hjust = 0.5), plot.subtitle = ggplot2::element_text(hjust = 0.5))
@@ -458,18 +470,18 @@ knobi_fit <- function( data, control=NULL, plot_out=FALSE, plot_filename=NULL, p
 
   # Biomass over years
 
-  b_plot<-ggplot2::ggplot(data=plot_df,ggplot2::aes(x=Year,y=b,color="#F8766D")) +
-    ggplot2::theme_bw() + ggplot2::geom_line() + ggplot2::geom_point() +
+  b_plot<-ggplot2::ggplot(data=plot_df,ggplot2::aes(x=Year,y=b)) +
+    ggplot2::theme_bw() + ggplot2::geom_line(color="#00BFC4") + ggplot2::geom_point(color="#00BFC4") +
     ggplot2::ylim(min_b,max_b) + ggplot2::labs(title=btit,y=baxis) +
     ggplot2::geom_hline(yintercept=c(Bmsy,Bmsy_inp),linetype="dashed",
                         color = c("#F8766D","#00BFC4"), na.rm=T) +
-    ggplot2::annotate("text",x=Year[length(Year)]-1,y=Bmsy,label="Bmsy (KBPM)",
+    ggplot2::annotate("text",x=Year[length(Year)]-1,y=Bmsy,label=msyt,
                       color = "#F8766D",size=3,vjust=-1) +
     ggplot2::theme(legend.position = "none", plot.title = ggplot2::element_text(hjust = 0.5), plot.subtitle = ggplot2::element_text(hjust = 0.5))
 
   if(!is.na(Bmsy_inp)){
     b_plot <- b_plot +
-      ggplot2::annotate("text",x=Year[1]+1,y=Bmsy_inp,label="original Bmsy",color = "#00BFC4",na.rm=T,size=3,vjust=-1)
+      ggplot2::annotate("text",x=Year[1]+1,y=Bmsy_inp,label=paste0("input ",msyt),color = "#00BFC4",na.rm=T,size=3,vjust=-1)
   }
 
   print(b_plot)
@@ -482,9 +494,9 @@ knobi_fit <- function( data, control=NULL, plot_out=FALSE, plot_filename=NULL, p
   }
 
 
-  br_plot<-ggplot2::ggplot(data=subset(plot_df,!is.na(plot_df$br)),ggplot2::aes(x=Year,y=br,color=b_factor)) +
+  br_plot<-ggplot2::ggplot(data=subset(plot_df,!is.na(plot_df$br)),ggplot2::aes(x=Year,y=br,color=br_factor)) +
     ggplot2::theme_bw() + ggplot2::geom_line() + ggplot2::geom_point() + ggplot2::ylim(min_br,max_br) +
-    ggplot2::labs(title=Brtit ,y =baxis) + ggplot2::geom_hline(yintercept=1) +
+    ggplot2::labs(title=Brtit ,y =bry) + ggplot2::geom_hline(yintercept=1) +
     ggplot2::guides(col=ggplot2::guide_legend(title="")) +
     ggplot2::theme(legend.position = c(.9,.95), legend.background = ggplot2::element_rect(fill = "transparent"),
                    plot.title = ggplot2::element_text(hjust = 0.5), plot.subtitle = ggplot2::element_text(hjust = 0.5))
@@ -503,7 +515,7 @@ knobi_fit <- function( data, control=NULL, plot_out=FALSE, plot_filename=NULL, p
 
   errors <- kbpm_error( fit, plot_out=plot_out)
 
-  fit$error_table <- errors$error_table
+  fit$performance_metrics <- errors$error_table
   fit$residuals <- errors$residuals
 
   if( plot_out==TRUE) setwd(old_dir)

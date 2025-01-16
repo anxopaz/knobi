@@ -26,7 +26,7 @@ utils::globalVariables(c("Sc"))
 
 print.knobi <- function(x, ...){
 
-  if(!is.null(x$plots)){
+  if(!is.null(x$plots) & is.null(x$plots3D)){
     cat("\n Projections: \n \n")
     print(subset(x$df, Sc!='input'))
     cat("\n \n")
@@ -68,9 +68,9 @@ print.knobi <- function(x, ...){
 
     if( x$input$basecontrol$pella){
 
-      cat("\n Additive model:\n","SP_t = (r/p)*B_t*(1-(B_t/K)^p)+c*X_tB_t \n \n")
+      cat("\n Additive model:\n","SP_t = (r/p)*B_t*(1-(B_t/K)^p)+c*X_t*B_t \n \n")
     } else {
-      cat("\n Additive model:\n","SP_t = r*B_t*(1-B_t/K)+c*X_tBt \n \n")
+      cat("\n Additive model:\n","SP_t = r*B_t*(1-B_t/K)+c*X_t*B_t \n \n")
     }
 
     cat("Parameter estimates:\n")

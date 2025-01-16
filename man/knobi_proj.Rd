@@ -6,33 +6,28 @@
 \arguments{
 \item{knobi_results}{The output object of \code{\link{knobi_fit}} function (main package function).}
 
-\item{env_results}{Optional. The output object of \code{\link{knobi_env}} function. The environmental KBPM fit is required to forecast considering the environmental variable(s) values in the future.}
+\item{env_results}{Optional. The output object of \code{\link{knobi_env}} function.}
 
-\item{Ct}{Optional. Vector, data frame or matrix that establishes the catch values for each one of the projected years. Different catch scenarios are allowed and can be defined in each of the data frame or matrix columns. Therefore, the length vector (in the case of one scenario) or the number of rows of the data frame or matrix (in the case of multiple scenarios) must be equal to the number of projected years. Projections can be carried out based on a set of future catch values or fishing mortality values, so only one of two arguments, 'Ct' or 'f', is required.}
+\item{c}{Optional. A vector, data frame, or matrix specifying the catch values for each projected year. Multiple catch scenarios can be defined, with each column in the data frame or matrix representing a different scenario. For a single scenario, the length of the vector must match the number of projected years; for multiple scenarios, the number of rows must match the projected years. Projections are based on either future catch values or fishing mortality values, so only one of the two arguments, 'c' or 'f', is required.}
 
-\item{f}{Optional. Vector, data frame or matrix that establishes the fishing mortality values for each one of the projected years. Different fishing mortality scenarios are allowed and can be defined in each of the data.frame or matrix columns. Therefore, the length vector (in the case of one scenario) or the number of rows of the data frame or matrix (in the case of multiple scenarios) must be equal to the number of projected years. Projections can be carried out based on a set of future catch values or fishing mortality values, so only one of two arguments, 'Ct' or 'f', is required.}
+\item{f}{Optional. A vector, data frame, or matrix specifying the fishing mortality values for each projected year. Multiple fishing mortality scenarios can be defined, with each column in the data frame or matrix representing a different scenario. For a single scenario, the length of the vector must match the number of projected years; for multiple scenarios, the number of rows must match the projected years. Projections are based on either future catch values or fishing mortality values, so only one of the two arguments, 'c' or 'f', is required.}
 
 \item{env}{Optional. Environmental variable(s) projections required if the environmental fit is considered to forecast the population and fishery dynamics. This fit considers the variable(s) selected in the \code{\link{knobi_env}} function. If the 'multicovar' argument of \code{\link{knobi_env}} is FALSE, tihs argument is a vector, data frame or matrix containing the values of the environmental covariates (unstandardized) for the projection years (rows) and the different catch or fishing mortality settings (columns).  On the other hand, if the 'multicovar' argument of \code{\link{knobi_env}} is TRUE, the current argument must be a list, and each entry must be a data frame or matrix corresponding to each catch or fishing mortality setting containing the values of the environmental covariates for that scenario.}
 
-\item{plot_out}{Logical. TRUE means that a file with the plot of the forecasts is created. The default value is the input in the \code{\link{knobi_fit}} function.}
+\item{plot_out}{Logical. If TRUE, a file containing the plot of the retrospective fits is created. The default value is the input in the \code{\link{knobi_fit}} function.}
 
-\item{plot_dir}{Optional. Directory to create the folder and save the plots. Required when 'plot_out=TRUE'. The default value is the input in the \code{\link{knobi_fit}} function.}
+\item{plot_dir}{Optional. Directory to create the folder and save the plots. Required when 'plot_out=TRUE'. The default value is taken from the input of the \code{\link{knobi_fit}} function.}
 
-\item{plot_filename}{Optional. Name of the folder that will contain the plots. Required when 'plot_out=TRUE'. The default value is the input in the \code{\link{knobi_fit}} function.}
+\item{plot_filename}{Optional. Name of the folder that will contain the plots. Required when 'plot_out=TRUE'. The default value is taken from the input of the \code{\link{knobi_fit}} function.}
 }
 \value{
 A list containing the projection results. \itemize{
-\item base: three-dimensional matrix containing the projected time series derived from the KBPM base model (see details in \code{link{knobi_fit}}) for each of the catch or fishing mortality scenarios. The first dimension (rows) corresponds to the years, the second dimension (columns) represent the stock quantities (biomass or SSB, surplus production, F and catches) and the third dimension refers to the projection scenarios.
-\item add: four-dimensional matrix containing the projected time series derived from the KBPM additive model (see \code{\link{knobi_env}} details) for each of the catch (or fishing mortality) scenarios combined with each of the different environment settings. The first dimension (rows) corresponds to the years, the second dimension (columns) concern the stock quantities (biomass or SSB, surplus production, F and catches), the third dimension refers to the environmental projection scenarios and the fourth dimension corresponds to the catch (or fishing mortality) scenarios. It is only returned if the arguments 'env_results' and 'env' are provided.
-\item mult: four-dimensional matrix containing the projected time series derived from the KBPM multiplicative model (see \code{\link{knobi_env}} details) for each of the catch (or fishing mortality) scenarios combined with each of the different environment settings. The first dimension (rows) corresponds to the years, the second dimension (columns) concern the stock quantities (biomass or SSB, surplus production, F and catches), the third dimension refers to the environmental projection scenarios and the fourth dimension corresponds to the catch (or fishing mortality) scenarios. It is only returned if the arguments 'env_results' and 'env' are provided.
-\item df: data frame containing historical and projected biomass (or SSB), catch, SP and fishing mortality values for the different scenarios.
-\item plots: data frame containing the plots with the projections, for each scenario or combination of scenarios and for each model.}
+\item df: data frame containing the projected time series. The rows correspond to the projection years, while the columns represent stock quantities: biomass or SSB, surplus production (SP), catch (C), and fishing mortality (F). Additionally, three columns specify the catch or fishing mortality scenario (Sc), the model used, and the environmental scenario (EnvSc).
+\item plots: list containing the plots with the projections. Each plot is a panel plot that includes four subplots representing biomass or SSB, surplus production, fishing mortality, and catches for each catch or fishing mortality scenario and for each environmental scenario (if they is provided).}
 The resulting plots are displayed in the plot window and are also saved (if plot_out="TRUE") in the  provided directory or in the same directory as \code{link{knobi_fit}}.
-If only the base KBPM is considered in the projections, a plot is presented with a panel reporting the catch, fishing mortality, SP and biomass (or SSB) for each catch or fishing mortality scenario.
-Furthermore, if the environmental fit is also considered, the plots are displayed with panels for each catch or fishing mortality scenario and for each environmental scenario.
 }
 \description{
-Projection of future population and fishery dynamics is carried out for a given set of management targets. More precisely, the function projects the time series of biomass (or spawning biomass) and then the surplus production for a set of future catch or fishing mortality values.
+This function forecasts population and fishery dynamics under a defined set of management targets. It projects the time series of biomass (or SSB) and the surplus production for a range of future catch or fishing mortality scenarios.
 }
 \examples{
 
@@ -49,13 +44,13 @@ Projection of future population and fishery dynamics is carried out for a given 
 
 catch<-rep(knobi_results$df$C[length(knobi_results$df$C)],5)
 
-Ct<-data.frame(catch=catch,
+C<-data.frame(catch=catch,
               catch08=0.8*catch,
               catch12=1.2*catch)
 
 # Then, knobi_proj function can be applied
 
-knobi_proj(knobi_results, Ct=Ct)
+knobi_proj(knobi_results, c=C)
 
 
 ### With environmental information
@@ -76,7 +71,7 @@ env<-data.frame(Tmax_cte=c(19,19,19,19,19),
 
 # Based on the previous objects we can apply the projection function.
 
-knobi_proj(knobi_results, knobi_environmental, Ct=Ct, env=env)
+knobi_proj(knobi_results, knobi_environmental, c=C, env=env)
 
 
 ### Through fishing mortality without environmental information
@@ -105,7 +100,7 @@ env<-list(climate_1=data.frame(AMO=c(0.2,0.2,0.3,0.3,0.4),
           climate_2=data.frame(AMO=c(0.2,0.3,0.4,0.5,0.6),
                               Tmax=c(19,20,21,22,23)))
 
-knobi_proj(knobi_results, knobi_environmental2, Ct=Ct, env=env)
+knobi_proj(knobi_results, knobi_environmental2, c=C, env=env)
 }
 
 }

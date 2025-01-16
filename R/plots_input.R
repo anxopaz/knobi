@@ -21,13 +21,13 @@ plotInput <- function( data, method = 'SSB', plot_out){
     p1=ggplot2::ggplot(data,ggplot2::aes(x=years, y=F)) +
       ggplot2::geom_line(data=data[!is.na(data$F),]) +
       ggplot2::geom_point(shape=21, color="black", fill="#56B4E9", size=3) +
-      ggplot2::ggtitle("F time series")+ggplot2::theme_bw()
+      ggplot2::ggtitle("F")+ggplot2::theme_bw()
     if(!is.null(subtitle)){
       p1=p1+ggplot2::labs(subtitle=subtitle)
     }}
   # Second plot
 
-  p2tit <- ifelse( method == 'SSB', "Average SSB time series", 'Average Biomass time series')
+  p2tit <- ifelse( method == 'SSB', "Average SSB", 'Average Biomass')
 
   p2=ggplot2::ggplot(data,ggplot2::aes(x=years, y=SSB)) +
     ggplot2::geom_line(data=data[!is.na(data$SSB),]) +
@@ -42,7 +42,7 @@ plotInput <- function( data, method = 'SSB', plot_out){
   p3=ggplot2::ggplot(data,ggplot2::aes(x=years, y=SP)) +
     ggplot2::geom_line(data=data[!is.na(data$SP),]) +
     ggplot2::geom_point(shape=21, color="black", fill="#56B4E9", size=3) +
-    ggplot2::ggtitle("Surplus Production time series")+ggplot2::theme_bw()
+    ggplot2::ggtitle("Surplus Production")+ggplot2::theme_bw()
   if(!is.null(subtitle)){
     p3=p3+ggplot2::labs(subtitle=subtitle)
   }
@@ -50,7 +50,7 @@ plotInput <- function( data, method = 'SSB', plot_out){
   p4=ggplot2::ggplot(data,ggplot2::aes(x=years, y=C)) +
     ggplot2::geom_line(data=data[!is.na(data$C),]) +
     ggplot2::geom_point(shape=21, color="black", fill="#56B4E9", size=3) +
-    ggplot2::ggtitle("Catch time series")+ggplot2::theme_bw()
+    ggplot2::ggtitle("Catch")+ggplot2::theme_bw()
   if(!is.null(subtitle)){
     p4=p4+ggplot2::labs(subtitle=subtitle)
   }
