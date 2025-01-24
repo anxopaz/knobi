@@ -22,10 +22,10 @@
 #' \item start_r: optional. Starting value for the growth rate parameter r (intrinsic rate of natural increase). See details.
 #' \item start_K: optional. Starting value for the carrying capacity parameter K (maximum population size where growth remains positive). See details.
 #' \item start_p: optional. Starting value for the shape parameter p, used exclusively in the Pella-Tomlinson model. See details.
-#' \item method: Specifies whether the model is fitted using 'SSB' (spawning stock biomass) or 'Biomass'. This argument is only required if both time series, 'SSB' and 'Biomass', are provided.}
+#' \item method: specifies whether the model is fitted using 'SSB' (spawning stock biomass) or 'Biomass'. This argument is only required if both time series, 'SSB' and 'Biomass', are provided.}
 #' @param plot_out Logical. If TRUE, files are generated with plots for both the input time series and the fitting results. Defaults to FALSE, which means that the plots will be displayed only in the window.
-#' @param plot_dir Optional. Directory for saving the plot files. Required when plot_out=TRUE. Current directory by default.
-#' @param plot_filename Optional. Name of the folder that will contain the plot files. By default, "knobi_results". Required when plot_out=TRUE.
+#' @param plot_dir optional. Directory for saving the plot files. Required when plot_out=TRUE. Current directory by default.
+#' @param plot_filename optional. Name of the folder that will contain the plot files. By default, "knobi_results". Required when plot_out=TRUE.
 #'
 #'
 #' @return The results of the KBPM fit include the following: \itemize{
