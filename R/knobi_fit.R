@@ -8,7 +8,7 @@
 #' \item Catch: catch time series observations.
 #' \item Biomass: biomass time series estimated through a data-rich stock assessment model. If available, otherwise enter SSB in the next argument.
 #' \item SSB: spawning stock biomass time series estimated through a data-rich stock assessment model. If available, otherwise introduce biomass in the previous argument.
-#' \item years: optional. Years in which catch observations have been measured. By default, an increasing natural sequence from 1 to the total number of catch observations.
+#' \item years: optional. Years in which catch observations have been taken. By default, an increasing natural sequence from 1 to the total number of catch observations.
 #' \item Stock: optional. Character string with the stock name for using in the plot subtitles.
 #' \item Recruitment: optional. Recruitment time series estimated through a data-rich stock assessment model. See details.
 #' \item F_input: optional. Fishing mortality time series estimated through a data-rich stock assessment model. See details.
@@ -18,12 +18,12 @@
 #' \item B_MSY: biomass at MSY (or SSB at MSY depending on the value of the 'method' argument, see control list).
 #' \item K: carrying capacity.}}
 #' @param control A list containing the following control parameters. \itemize{
-#' \item pella: pella: logical. If TRUE, the Pella-Tomlinson model is applied; if FALSE (default), the Schaefer model is used. See details.
+#' \item pella: logical. If TRUE, the Pella-Tomlinson model is applied; if FALSE (default), the Schaefer model is used. See details.
 #' \item start_r: optional. Starting value for the growth rate parameter r (intrinsic rate of natural increase). See details.
 #' \item start_K: optional. Starting value for the carrying capacity parameter K (maximum population size where growth remains positive). See details.
 #' \item start_p: optional. Starting value for the shape parameter p, used exclusively in the Pella-Tomlinson model. See details.
 #' \item method: Specifies whether the model is fitted using 'SSB' (spawning stock biomass) or 'Biomass'. This argument is only required if both time series, 'SSB' and 'Biomass', are provided.}
-#' @param plot_out Logical. If TRUE, files are generated with plots for both the input time series and the fitting results. Defaults to FALSE.
+#' @param plot_out Logical. If TRUE, files are generated with plots for both the input time series and the fitting results. Defaults to FALSE, which means that the plots will be displayed only in the window.
 #' @param plot_dir Optional. Directory for saving the plot files. Required when plot_out=TRUE. Current directory by default.
 #' @param plot_filename Optional. Name of the folder that will contain the plot files. By default, "knobi_results". Required when plot_out=TRUE.
 #'
@@ -45,7 +45,7 @@
 #' \item AIC: Akaike information criterion.
 #' \item RMSE: root mean squared error (observed vs. estimated values).
 #' \item MAPE: mean absolute percentage error (observed vs. estimated values).}
-#' \item input: the input list updated with the annual average biomass ($input$Average_Biomass), the surplus production ($input$SP), and the F estimates derived from the fit, in ($input$F_output).
+#' \item input: the input list updated with the annual average biomass ($input$Average_Biomass), the surplus production ($input$SP) and the F estimates derived from the fit ($input$F_output).
 #' \item control: the updated control settings of the fit.
 #' \item optimx: list of some results provided by \code{\link[optimx]{optimx}}: \itemize{
 #' \item value: value of the objective function in the minimization process.
@@ -64,10 +64,10 @@
 #' }
 #'
 #' @details The KBPMs implemented in the current package are explained below.
-#' Schaefer model (1954) (1):
+#' Schaefer model (1954) (Eq. 1):  
 #' \deqn{SP_{t} = r \overline{B}_{t} (1-(\overline{B}_{t}/K))}
-#' where \eqn{SP_{t}} is the surplus production, \eqn{\overline{B}_{t}} is the average biomass or SSB (mean of two consecutive years), \eqn{r} is the population growth rate parameter, and \eqn{K} is the carrying capacity. The subscript \eqn{t} denotes the time (years).
-#' Pella and Tomlinson model (1969) (2):
+#' where \eqn{SP_{t}} is the surplus production, \eqn{\overline{B}_{t}} is the average biomass or SSB (mean of two consecutive years), \eqn{r} is the population growth rate parameter, and \eqn{K} is the carrying capacity. The subscript \eqn{t} denotes the time (years).  
+#' Pella and Tomlinson model (1969) (Eq 2):  
 #' \deqn{SP_{t} = (r/p) \overline{B}_{t} (1-(\overline{B}_{t}/K)^{p})}
 #' where \eqn{SP_{t}} is the surplus production, \eqn{\overline{B}_{t}} is the average biomass or SSB,  \eqn{r} is the population growth rate parameter, \eqn{K} is the carrying capacity and \eqn{p} is the asymmetry parameter. The subscript \eqn{t} denotes the time (years).
 #'
