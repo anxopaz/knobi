@@ -4,11 +4,11 @@
 #'
 #' @description This function performs a retrospective analysis that evaluates the robustness of the KBPM fit to the systematic deletion of recent data.
 #'
-#' @param knobi_results A list containing the results of the KBPM fit. Object provided by \code{\link{knobi_fit}} function (main package function).
+#' @param knobi_results The object resulting from the \code{\link{knobi_fit}} function, which are the results of the base KBPM fit.
 #' @param nR Number of retrospective patterns. 5 by default. See details.
 #' @param yR Optional. A vector representing the final years of the catch time series for each of the retrospective models. See details.
 #' @param yR0 Optional. A vector representing the starting years of the catch time series for each of the retrospective models. This vector must be the same length as the yR vector. By default, the catch time series is assumed to start in the same year as the original fit.
-#' @param env_results Optional. A list containing the results of the environmental KBPM fit. Object provided by \code{\link{knobi_env}} function. If this argument is provided, the retrospective analysis is carried out for the base and the environmental KBPM models.
+#' @param env_results Optional. The object resulting from the \code{\link{knobi_env}} function. A list containing the results of the environmental KBPM fit. If this argument is provided, the retrospective analysis is carried out for the base and the environmental KBPM models.
 #' @param plot_out Logical. If TRUE, a file containing the plot of the retrospective fits is created. The default value is the input in the \code{\link{knobi_fit}} function.
 #' @param plot_dir Optional. Directory to create the folder and save the plots. Required when 'plot_out=TRUE'. The default value is taken from the input of the \code{\link{knobi_fit}} function.
 #' @param plot_filename Optional. Name of the folder that will contain the plots. Required when 'plot_out=TRUE'. The default value is taken from the input of the \code{\link{knobi_fit}} function.

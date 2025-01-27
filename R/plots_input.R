@@ -8,17 +8,17 @@ plotInput <- function( data, method = 'SSB', plot_out){
 
   if(!is.null(data$Stock)){subtitle=data$Stock} else {subtitle=NULL}
   if(is.na(data$F_input[1])==T){
-    data=data.frame(years=as.numeric(data$years),SP=as.numeric(data$SP),
+    data=data.frame(Year=as.numeric(data$years),SP=as.numeric(data$SP),
                     C=as.numeric(data$Catch), SSB=as.numeric(data$Average_Biomass))
   } else {
     F=as.numeric(data$F_input)
-    data=data.frame(F=as.numeric(data$F_input),years=as.numeric(data$years),SP=as.numeric(data$SP),
+    data=data.frame(F=as.numeric(data$F_input),Year=as.numeric(data$years),SP=as.numeric(data$SP),
                     C=as.numeric(data$Catch), SSB=as.numeric(data$Average_Biomass))}
 
   # Panel 1
   # First plot
   if(!is.null(data$F)){
-    p1=ggplot2::ggplot(data,ggplot2::aes(x=years, y=F)) +
+    p1=ggplot2::ggplot(data,ggplot2::aes(x=Year, y=F)) +
       ggplot2::geom_line(data=data[!is.na(data$F),]) +
       ggplot2::geom_point(shape=21, color="black", fill="#56B4E9", size=3) +
       ggplot2::ggtitle("F")+ggplot2::theme_bw()
@@ -29,7 +29,7 @@ plotInput <- function( data, method = 'SSB', plot_out){
 
   p2tit <- ifelse( method == 'SSB', "Average SSB", 'Average Biomass')
 
-  p2=ggplot2::ggplot(data,ggplot2::aes(x=years, y=SSB)) +
+  p2=ggplot2::ggplot(data,ggplot2::aes(x=Year, y=SSB)) +
     ggplot2::geom_line(data=data[!is.na(data$SSB),]) +
     ggplot2::geom_point(shape=21, color="black", fill="#56B4E9", size=3) +
     ggplot2::ggtitle(p2tit)+ggplot2::theme_bw()
@@ -39,7 +39,7 @@ plotInput <- function( data, method = 'SSB', plot_out){
 
 
   # Third plot
-  p3=ggplot2::ggplot(data,ggplot2::aes(x=years, y=SP)) +
+  p3=ggplot2::ggplot(data,ggplot2::aes(x=Year, y=SP)) +
     ggplot2::geom_line(data=data[!is.na(data$SP),]) +
     ggplot2::geom_point(shape=21, color="black", fill="#56B4E9", size=3) +
     ggplot2::ggtitle("Surplus Production")+ggplot2::theme_bw()
@@ -47,7 +47,7 @@ plotInput <- function( data, method = 'SSB', plot_out){
     p3=p3+ggplot2::labs(subtitle=subtitle)
   }
   # Fourth plot
-  p4=ggplot2::ggplot(data,ggplot2::aes(x=years, y=C)) +
+  p4=ggplot2::ggplot(data,ggplot2::aes(x=Year, y=C)) +
     ggplot2::geom_line(data=data[!is.na(data$C),]) +
     ggplot2::geom_point(shape=21, color="black", fill="#56B4E9", size=3) +
     ggplot2::ggtitle("Catch")+ggplot2::theme_bw()

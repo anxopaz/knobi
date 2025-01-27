@@ -39,7 +39,7 @@
 #'
 #' @usage data(knobi_dataset)
 #'
-#' @format A list where items corresponds to the assessment summary tables for the ICES northern hake stock and the ICES southern and northern sardine stocks, and the environmental data frame.
+#' @format A list where items corresponds to the assessment summary tables for the ICES northern hake stock, the ICES southern and northern sardine stocks and the environmental data frame.
 #'
 #' @source `getSAG` function of the "icesSAG" package and the Meteogalicia (https://www.meteogalicia.gal) and UCAR website (https://climatedataguide.ucar.edu/).
 #'
