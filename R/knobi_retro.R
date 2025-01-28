@@ -13,12 +13,15 @@
 #' @param plot_dir Optional. Directory to create the folder and save the plots. Required when 'plot_out=TRUE'. The default value is taken from the input of the \code{\link{knobi_fit}} function.
 #' @param plot_filename Optional. Name of the folder that will contain the plots. Required when 'plot_out=TRUE'. The default value is taken from the input of the \code{\link{knobi_fit}} function.
 #'
-#' @details There are different options for defining retrospective fits:
-#' (1) Usage of 'nR' argument. This argument specifies the number of retrospective patterns. By using this argument, it is implied that the retrospective fits will consist of systematically deleting the last year of data, up to the number of years specified by 'nR'.
+#' @details There are different options for defining retrospective fits:  
+#' 
+#' (1) Usage of 'nR' argument. This argument specifies the number of retrospective patterns. By using this argument, it is implied that the retrospective fits will consist of systematically deleting the last year of data, up to the number of years specified by 'nR'.  
+#' 
 #' (2) Usage of 'yR' argument. This argument specifies the final years of the catch time series for each of the retrospective models, providing greater flexibility in choosing the years from which to delete information. The number of retrospective fits will correspond to the length of the 'yR' vector. Additionally, different starting years can be set using the 'yR0' argument. 
+#' 
 #' If both arguments, 'nR' and yR, are provided, the package will prioritize the use of 'yR'.
 #' 
-#' In the case of the environmental models, both the estimated biological reference points and the plotted production curve correspond to a value of the scaled environmental variable equal to the mean of the time series, i.e. \eqn{X_{t}=0}, which cancels out the environmental effect in the equations defining both models. For more details, such as the calculation of BRPs as a function of the environmental variable, see vignettes.
+#' As described in the \code{\link{knobi_env}} function details, in the case of the environmental models, both the estimated biological reference points and the plotted production curve correspond to a value of the scaled environmental variable equal to the mean of the time series, i.e. \eqn{X_{t}=0}, which cancels out the environmental effect in the equations defining both models. For more details, such as the calculation of BRPs as a function of the environmental variable, see vignettes.
 #'
 #' @return A list containing the results of the retrospective analysis, including parameter estimates and reference points for each model. The estimated surplus production curves from the retrospective analysis are also plotted, with a panel where each graph represents the curves for each model in case of considering environmental models. The plot is displayed in the plot window and saved (if plot_out=TRUE) in the specified directory or in the current directory.
 #'

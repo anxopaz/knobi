@@ -367,7 +367,7 @@ knobi_retro( hake_n_results,
              yR0 = c(1990,1995,1995))
 ```
 
-The environmental fit information can be considered too in the retrospective analysis through the `env_results` argument, where the result of the `knobi_environmental` function has to be provided. For environmental models, both the estimated BRPs and the plotted production curve correspond to a value of the scaled environmental variable equal to the mean of the time series, i.e. $X_t=0$, which cancels out the environmental effect in the equations defining both models. In this case a panel of plots is provided, where each graph corresponds with a different model.
+The environmental fit information can be considered too in the retrospective analysis through the `env_results` argument, where the result of the `knobi_environmental` function has to be provided. For environmental models, both the estimated BRPs and the plotted production curve correspond to a value of the scaled environmental variable equal to the mean of the time series, i.e. $X_t=0$, which cancels out the environmental effect in the equations defining both models as it has been explained in the 'knobi_env` function help's details. In this case a panel of plots is provided, where each graph corresponds with a different model.
 
 ```{r,  fig.width=6, fig.height=4, fig.align = 'center'}
 knobi_retro(hake_n_results, hake_n_environmental, nR = 3); hake_n_retros

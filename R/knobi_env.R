@@ -31,9 +31,11 @@
 #' 
 #' Additive environmental model adds the following term on the right hand of Eq. (1) or Eq. (2) described in \code{\link{knobi_fit}} function: \eqn{cX_{t-lag}B_{t}}, being \eqn{X_{t-lag}} the environmental variable at time \eqn{t-lag} and \eqn{B_{t}} the biomass or SSB at time \eqn{t}.
 #' 
-#' Multiplicative environmental model multiplies the right hand of Eq. (1) or Eq. (2) by \eqn{exp(cX_{t-lag})}.
+#' Multiplicative environmental model multiplies the right hand of Eq. (1) or Eq. (2) by \eqn{exp(cX_{t-lag})}.  
+#' 
+#' In the case of these models, the estimated biological reference points correspond to a value of the scaled environmental variable equal to the mean of the time series, i.e. \eqn{X_{t}=0}, which cancels out the environmental effect in the equations defining both models, i.e. the effect of the parameter \eqn{c}. The fit of the parameters included in the Eq. (1) or Eq. (2), and therefore for the BRPs as well, will be different from the results of the base model because the fact of having included the environmental effect in the equations had an impact on the estimation of the curve. For more details, such as the calculation of BRPs as a function of the environmental variable, see vignettes.
 #'
-#' If ar_cor argument is set to "TRUE", the correlation analysis between the knobi_fit residuals and the environmental variable(s) is conducted as follows:
+#' If ar_cor argument is set to "TRUE", the correlation analysis between the \code{\link{knobi_fit}} residuals and the environmental variable(s) is conducted as follows:
 #' 
 #' First, an AR model is fitted to the KBPM base residuals.
 #' \deqn{r_t=\sum_{i=1}^{p}\beta_{i}r_{t-i}+\epsilon_{t}}
@@ -43,12 +45,14 @@
 #' \deqn{r_{t}=\sum_{i=1}^{p}\beta_{i}r_{t-i}+X_{t-lag}+\epsilon_{t}}
 #' for \eqn{lag=0,1,...,nlag}; being \eqn{X_{t-lag}} the lagged environmental variable. Then, we have an autoregressive model for each of the lagged environmental variables.
 #' 
-#' Once an autoregressive model is fitted for each of the lagged environmental variables, the lagged environmental variable with the lowest Akaike Information Criterion (AIC) is selected for inclusion in the KBPM environmental fit.
+#' Once an autoregressive model is fitted for each of the lagged environmental variables, the lagged environmental variable with the lowest Akaike Information Criterion (AIC) is selected for inclusion in the KBPM environmental fit.  
+#' 
+#' It is important to highlight that the results include the analysis of the AR model only with the base model residuals in order to determine the need for coupling environmental information, considering that it would not be necessary if this model shows a lower AIC, even reducing the number of parameters to fit.
 #'
 #' @return A list containing the results of the three-step environmental analysis is provided. \itemize{
 #' \item add: estimates of the additive model parameters.
 #' \item mult: estimates of the multiplicative model parameters.
-#' \item BRPs: reference points (RPs) estimates for each model (see vignettes for RPs equations depending on X_t).
+#' \item BRPs: reference points (RPs) estimates for each model for the environmental models with no environmental effect (see details).
 #' \item df: data frame with the information used in the fit.
 #' \item selected_var: environmental variable(s) used in the fit.
 #' \item selected_lag: data frame providing the time lag of the environmental variable(s) in the KBPM fit.
