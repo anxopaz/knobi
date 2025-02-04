@@ -33,16 +33,16 @@
 #' 
 #' Multiplicative environmental model multiplies the right hand of Eq. (1) or Eq. (2) by \eqn{exp(cX_{t-lag})}.  
 #' 
-#' In the case of these models, the estimated biological reference points correspond to a value of the scaled environmental variable equal to the mean of the time series, i.e. \eqn{X_{t}=0}, which cancels out the environmental effect in the equations defining both models, i.e. the effect of the parameter \eqn{c}. The fit of the parameters included in the Eq. (1) or Eq. (2), and therefore for the BRPs as well, will be different from the results of the base model because the fact of having included the environmental effect in the equations had an impact on the estimation of the curve. For more details, such as the calculation of BRPs as a function of the environmental variable, see vignettes.
+#' In the case of these models, the estimated biological reference points correspond to a value of the scaled environmental variable equal to the mean of the time series, i.e. \eqn{X_{t}=0}, which cancels out the effect of the parameter \eqn{c}. The estimates of the remain parameters included in the Eq. (1) or Eq. (2), and therefore for the BRPs as well, will be different from the base model ones because the fact of having included the environmental effect in the equations had an impact on the estimation of the curve. For more details, such as the calculation of BRPs as a function of the environmental variable, see vignettes.
 #'
 #' If ar_cor argument is set to "TRUE", the correlation analysis between the \code{\link{knobi_fit}} residuals and the environmental variable(s) is conducted as follows:
 #' 
 #' First, an AR model is fitted to the KBPM base residuals.
-#' \deqn{r_t=\sum_{i=1}^{p}\beta_{i}r_{t-i}+\epsilon_{t}}
-#' being \eqn{r_t} the KBPM base residual for year \eqn{t} and \eqn{p} the AR model order, estimated as the maximum time lag at which the absolute value of the residuals partial autocorrelation is greater tha than \eqn{qnorm(0.975)/\sqrt N_r}, being \eqn{N_r} the length of the residuals series.
+#' \deqn{r_t=\sum_{i=1}^{\rho}\beta_{i}r_{t-i}+\epsilon_{t}}
+#' being \eqn{r_t} the KBPM base residual for year \eqn{t} and \eqn{\rho} the AR model order, estimated as the maximum time lag at which the absolute value of the residuals partial autocorrelation is greater than \eqn{qnorm(0.975)/\sqrt N_r}, being \eqn{N_r} the length of the residuals series.
 #' 
 #' AR models are then fitted to the residuals incorporating each lagged environmental variable \eqn{X_{t-lag}} as an explanatory covariate,
-#' \deqn{r_{t}=\sum_{i=1}^{p}\beta_{i}r_{t-i}+X_{t-lag}+\epsilon_{t}}
+#' \deqn{r_{t}=\sum_{i=1}^{\rho}\beta_{i}r_{t-i}+X_{t-lag}+\epsilon_{t}}
 #' for \eqn{lag=0,1,...,nlag}; being \eqn{X_{t-lag}} the lagged environmental variable. Then, we have an autoregressive model for each of the lagged environmental variables.
 #' 
 #' Once an autoregressive model is fitted for each of the lagged environmental variables, the lagged environmental variable with the lowest Akaike Information Criterion (AIC) is selected for inclusion in the KBPM environmental fit.  

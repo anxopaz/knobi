@@ -20,7 +20,8 @@ library(knobi)
 
 In this vignette we illustrate the use of the `knobi` package through a real case example. For this purpose, the formulation of the Known Biomass Production Models (KBPMs) is explained and then each of the functions of the package is described and applied to a real case study.
 
-It should be noted that this vignette will not show all the possibilities of each of the functions contained in this package, but only those essential for the correct functioning of each function, as well as some alternatives. For more information, please consult the help for each of the functions of the package.
+Please note that this vignette does not cover all possibilities for each function in this package (i.e., not all arguments or combinations of arguments are used). Instead, it focuses on describing the basic usage of the functions, with some alternatives included for certain functions. For more detailed information, please refer to the help documentation for each function in the package.
+
 
 ## 1. KBPM formulation
 
@@ -30,15 +31,15 @@ For a correct understanding of KBPM models, we start reviewing the surplus produ
 
 Traditional SPMs are one of the most widely used data-limited (or data moderated) assessment models. Their general structure relates directly to Russell’s formulation of the stock dynamics:
 
-$$B_{t+1}=B_t + f(B_t)-C_t$$ (1)
+$$B_{t+1}=B_t + f(B_t)-C_t$$ Eq. (1)
 
 where *B<sub>t</sub>* is the stock biomass at the beginning of year *t*, *C<sub>t</sub>* is the biomass caught during year *t* and *f(B<sub>t</sub>)* is the biomass production function.
 
 There are many formulations of the biomass production function *f(B<sub>t</sub>)*, among which the general Pella-Tomlinson (1969) is widely used:
 
-$$f(B_t) = \frac{r}{p}{B_{t}} \left(1-\left( \frac{B_{t}}{K}\right) ^{p}\right)$$ (2)
+$$f(B_t) = \frac{r}{p}{B_{t}} \left(1-\left( \frac{B_{t}}{K}\right) ^{p}\right)$$ Eq. (2)
 
-where *r* is the intrinsic population growth rate, *K* is the carrying capacity and *p* is the asymmetry parameter, which allows non-symmetrical production curves and, consequently, maximum production different from *K/2*.
+where *r* is the intrinsic population growth rate, *K* is the carrying capacity and *p* is the asymmetry parameter, which allows non-symmetrical production curves and, consequently, maximum production different from *K/2*. Schaefer (1954) model corresponds to *p=1* (symmetric production curve and $SP_{max}=K/2$).
 
 SPMs link the population dynamics, i.e. Eq. (1) with the observations through the relation between the catch and the stock biomass across the catchability coefficient (*q*). 
 
@@ -47,7 +48,7 @@ where *I<sub>t* is the value of the relative biomass index for year *t*, notatio
 
 An alternative line of research based on surplus production models named known-biomass production models (KBPM) was developed (MacCall, 2002). The basis of the KBPM model is the idea that the annual surplus production in an unfished stock is equal to *B<sub>t+1</sub>-B<sub>t*, and that, for a fished stock, the calculation of surplus production depends on catch. 
 
-$$SP_t=\overline{B}_{t+1}-\overline{B}_t+C_t$$ (3)
+$$SP_t=\overline{B}_{t+1}-\overline{B}_t+C_t$$  Eq. (3)
 
 where *SP<sub>t</sub>* is the surplus production during year *t*, *<SPAN STYLE="text-decoration:overline">B</SPAN><sub>t</sub>* is the average biomass or SSB, *<SPAN STYLE="text-decoration:overline">B</SPAN><sub>t</sub>=(B<sub>t</sub>+B<sub>t+1</sub>)/2*, and *C<sub>t</sub>* represents the catch during year *t*.
 
@@ -55,9 +56,7 @@ In contrast to the traditional SPMs, KBPMs use as input data a biomass time seri
 
 Once the surplus production is calculated using the known average biomass (of two consecutive years) and the observed catch, the KBPMs are fitted as:
 
-$$SP_{t}= \frac{r}{p}\overline{B}_{t}\left(1-\left( \frac{\overline{B}_{t}}{K}\right) ^{p}\right)$$ (4)
-
-Schaefer (1954) model corresponds to *p=1* (symmetric production curve and $SP_{max}=K/2$).
+$$SP_{t}= \frac{r}{p}\overline{B}_{t}\left(1-\left( \frac{\overline{B}_{t}}{K}\right) ^{p}\right)$$ Eq. (4)
 
 
 ## 2. `knobi` package ##
@@ -66,7 +65,7 @@ In this section the `knobi` package functions are described. More precisely, in 
 
 1. `knobi_fit`: fits the KBPM model (main function).
 
-2. `knobi_env`: analyzes the productivity changes in response to environmental fluctuations.
+2. `knobi_env`: analyzes the production changes in response to environmental fluctuations.
 
 3. `knobi_retro`: carries out the retrospective analysis.
 
@@ -85,7 +84,7 @@ For that, the case study of European hake ($Merluccius$ $merluccius$) is used. E
 
 The first step is to create the `data` input object.
 
-The data was downloaded using the `icesSAG` package, then it was uploaded and saved in the `hake_n` object.
+The data was downloaded using the `icesSAG` package and saved in the `knobi_dataset` under the `hake_n` object.
 
 ```{r}
 data( knobi_dataset)
@@ -94,7 +93,7 @@ hake_n <- knobi_dataset$hake_n
 
 Then the `data` list for `knobi_fit` is created. Mandatory data are the catch time series and the biomass or SSB time series. However, in this example we also include some additional available information.
 
-As you can see, in the code below, the data input argument is created. Firstly we introduce both, the biomass and spawning stock biomass (SSB) series, then below in the `control` argument we indicate which of the two series is used in the fit. After that, in the next line of code, we introduce the second data source which are the catches. After introducing the two main sources of information, we can add more details that are used mainly for comparing KBPM results to data rich ones. In this particular case, we add the recruitment series, the value of the reference point $F_{msy}$ and the years associated to the observed catch time series (if omitted, an increasing sequence from 1 onward will be used).
+As you can see, in the code below, the data input argument is created. Firstly we introduce both, the biomass and spawning stock biomass (SSB) series, then below in the `control` argument we indicate which of the two series is used in the fit. After that, in the next line of code, we introduce the second data source which are the catches. After introducing the two main sources of information, we can add more details that are used mainly for comparing KBPM results with those derived from the assessment model that produced the SSB estimates (a data-rich model). In this particular case, we add the recruitment series, the value of the reference point $F_{msy}$ and the years associated to the observed catch time series (if omitted, an increasing sequence from 1 onward will be used).
 
 Details about the optional entries of this argument can be found on the help page.
 
@@ -142,7 +141,7 @@ Note that if the length of the input catch time series does not match with the S
 hake_n_results <- knobi_fit( data, control, plot_out=FALSE)
 ```
 
-As you can see, the following input quantities are plotted: fishing mortality time series, SSB, surplus production and catch time series. Note that in this example we are using `control$method=SSB`, which means that we are going to operate with the SSB and not with the stock biomass. Plots of catch over fishing mortality, fishing mortality over SSB, and catch over SSB time series with a smooth line from a "loess" regression are also displayed. Plot of input-output time series of fishing mortality is also provided with horizontal lines at fishing mortalities at MSY (two lines representing the input, data-rich, and output, KBPM, quantities). The fishing mortality relative to $F_{msy}$ is also plotted including a reference horizontal line at 1. The analogous SSB plots are also reported. On the other hand, the fitted surplus production curve is plotted twice with the SSB and SP observations (first plot) and with the catch and SP observations (second plot). Finally, a plot with the KBPM fit residuals is shown.
+As you can see, the following input quantities are plotted: fishing mortality time series, SSB, surplus production and catch time series. Note that in this example we are using `control$method=SSB`, which means that we are going to operate with the SSB and not with the stock biomass. Plots of catch over fishing mortality, fishing mortality over SSB, and catch over SSB time series with a smooth line from a "loess" regression are also displayed. Plot of input-output time series of fishing mortality is also provided with horizontal lines at fishing mortalities at MSY (two lines representing both input and output). The fishing mortality relative to $F_{msy}$ is also plotted including a reference horizontal line at 1. The analogous SSB plots are also reported. It is important to mention that, in these cases, inputs are represented in blue and outputs in red, highlighting the case of the SSB, where the absolute value is an input of the model, while the relative SSB (SSB/SSBmsy) depends on the estimation of the reference point, so it is represented in red as well. On the other hand, the fitted surplus production curve is plotted twice with the SSB and SP observations (first plot) and with the catch and SP observations (second plot). Finally, a plot with the KBPM fit residuals is shown.
 
 ```{r, echo=FALSE, warning=FALSE,  fig.width=6, fig.height=4, fig.align = 'center'}
 hake_n_results <- knobi_fit( data, control, plot_out=FALSE)
@@ -173,16 +172,16 @@ After carrying out the KBPM fit using `knobi_fit`, `knobi_env` function allows u
 2.  The selection of which lagged environmental variable(s) is included in the environmental KBPM models fit; 
 3.  The KBPM environmental fit.
 
-In step (3) environmental covariables can be included as additive and multiplicative effects in the KBPM base formulation, i.e. Eq. (4).
+In step (3) environmental covariables can be included as additive and multiplicative effects in the KBPM base formulation, i.e. in Eq. (4).
 
 * Additive model:
 
-$$SP_{t}= \frac{r}{p}\overline{B}_{t}\left(1-\left( \frac{\overline{B}_{t}}{K}\right) ^{p}\right) + cX_t\overline{B}_{t}$$ (5)
-being *c* the parameter that represent the effect of the environmental variable *X<sub>t</sub>* (*t* index represents years).
+$$SP_{t}= \frac{r}{p}\overline{B}_{t}\left(1-\left( \frac{\overline{B}_{t}}{K}\right) ^{p}\right) + cX_{t-lag}\overline{B}_{t}$$ (5)
+being *c* the parameter that represent the effect of the lagged environmental variable *X<sub>t-lag</sub>* (*t* index represents years and $lag$ represent the response variable $lag$, as explained below).
 
 * Multiplicative model:
 
-$$SP_{t}= \frac{r}{p}\overline{B}_{t}\left(1-\left( \frac{\overline{B}_{t}}{K}\right) ^{p}\right)exp^{cX_t}$$ (6)
+$$SP_{t}= \frac{r}{p}\overline{B}_{t}\left(1-\left( \frac{\overline{B}_{t}}{K}\right) ^{p}\right)exp^{cX_{t-lag}$$ (6)
 
 
 `knobi_env` inputs are the object returned by `knobi_fit` and a `data` object containing, at least, the mandatory environmental information required for the fit: the `env` argument, which is a data frame containing the values of each one of the environmental variable(s) in one column; and the `years` argument, which contains the years in which the environmental variable(s) are reported.
@@ -243,14 +242,11 @@ hake_n_environmental
 
 A detailed description of each slot of the output function's object is available in the help page. The output object contains the parameter estimates for both models and its reference points estimates, the accuracy measures for each model and the correlation analysis between the environmental variable(s) and the KBPM base residuals, among other results.
 
-From Eq. (5) and (6) we can derive the formulas that provide the reference points (RPs). It is important to take into account that in these models the RPs can depend on the value of the environmental covariate (details provided below for each model).
+From Eq. (5) and Eq. (6) we can derive the formulas that provide the reference points (BRPs). It is important to take into account that in these models the BRPs depend on the value of the environmental covariate (details provided below for each model).
 
+In the case of these environmental models, the estimated BRPs correspond to a value of the scaled environmental variable equal to the mean of the time series, i.e. $X_t=0$, which cancels out the effect of the parameter $c$. The estimates of the remain parameters included in the Eq. (2), and therefore for the BRPs as well, will be different from the base model ones because the fact of having included the environmental effect in the equations had an impact on the estimation of the curve.
 
-```{r}
-hake_n_environmental$BRPs
-```
-
-For simplicity, the output slot `$BRPs` provides the RPs estimates for a value of the centered environmental variable equal to 0 (*X=0*). The mathematical formulation of the RPs estimates for each KBPM model depending on the centered environmental variable are:
+The mathematical formulation of the BRPs estimates for each KBPM model depending on the centered environmental variable are:
 
 * In the case of the multiplicative model
 
@@ -259,7 +255,7 @@ $$F_{msy}(X)=\frac{r}{p}\left(1-\frac{1}{p+1}\right) cX$$
 $$MSY(X)=B_{msy}(X)*F_{msy}(X)$$
 $$K(X)=K$$
 
-where *r*, *p*, *K* and *c* are the model parameter estimates of the Eq. (5) and (6) and *X* the centered environmental variable.
+where *r*, *p*, *K* and *c* are the model parameter estimates of the additive and multiplicative environmental models, i.e. Eq. (5) and Eq. (6) respectively; and *X* the centered environmental variable.
 
 
 * In the case of the additive model
@@ -269,7 +265,15 @@ $$F_{msy}(X)=\frac{r}{p}\left(1-\frac{1}{p+1}\right)-\frac{cX}{p+1}+cX$$
 $$MSY(X)=B_{msy}(X)*F_{msy}(X)$$
 $$K(X)=K+cX$$
 
-where *r*, *p*, *K* and *c* are the model parameter estimates of the Eq. (5) and (6) and *X* the centered environmental variable.
+where *r*, *p*, *K* and *c* are the model parameter estimates of the Eq. (5) and Eq. (6) and *X* the centered environmental variable.
+
+For simplicity, the output slot `$BRPs` provides the BRPs estimates for a value of the centered environmental variable  equal to the mean of the time series, i.e. \eqn{X_{t}=0}, which cancels out the environmental effect in the equations defining both models, i.e. the effect of the parameter \eqn{c}.
+
+```{r}
+hake_n_environmental$BRPs
+```
+
+
 
 
 #### More options ####
@@ -283,7 +287,7 @@ knobi_env( hake_n_results, data, control)
 
 There is also the possibility of fixing which lag is used  in the relation among the surplus production and the environmental variable, for that the  `lag` argument is used instead of `nlag` inside `control` as you can see below
 
-Furthermore, it is also possible to fit the environmental models considering several variables at the same time using `control$multicovar = TRUE`. This means that *cX<sub>t</sub>* is replaced by $\sum_{i=1}^{N} c_i X_{t,i}$ in Eq. (5) and (6), where index *N* represents the number of environmental variables.
+Furthermore, it is also possible to fit the environmental models considering several variables at the same time using `control$multicovar = TRUE`. This means that *cX<sub>t</sub>* is replaced by $\sum_{i=1}^{N} c_i X_{t,i}$ in Eq. (5) and Eq. (6), where index *N* represents the number of environmental variables.
 
 Below you can see how we introduce the same data set as in previous examples but in the control we set `multicovar=TRUE` so that the two variables, “AMO” and “TMax”, are considered in the environmental fit. Note that “AMO” is 2 years lagged whereas “TMAX” is 3 years lagged respect the SP.
 
@@ -295,13 +299,13 @@ hake_n_multi <- knobi_env( hake_n_results, data, control)
 
 Finally, there is also the possibility of testing the correlation between the KBPM residuals and the environmental variable(s) through the fit of autoregressive models (AR models). In this case, firstly an AR model is fitted for the residuals in order to determine how the residuals can explain themselves:
 
-$$ r_t=\sum_{i=1}^{p}\beta_{i}r_{t-i}+\epsilon_{t}$$
+$$ r_t=\sum_{i=1}^{\rho}\beta_{i}r_{t-i}+\epsilon_{t}$$
 
-being *r<sub>t</sub>* the KBPM base SP residual for year *t* and *p* the AR model order, estimated as the maximum time lag at which the absolute value of the residuals partial autocorrelation is large than *qnorm(0.975)<SQRT>N<sub>r</sub></SQRT>* being *N<sub>r</sub>* the length of the residuals series.
+being *r<sub>t</sub>* the KBPM base residual for year *t* and $\rho$ the AR model order, estimated as the maximum time lag at which the absolute value of the residuals partial autocorrelation is large than *qnorm(0.975)<SQRT>N<sub>r</sub></SQRT>* being *N<sub>r</sub>* the length of the residuals series.
 
 Then, AR models are fitted considering each one of the lagged environmental variable(s),
 
-$$r_{t,lag}=\sum_{i=1}^{p}\beta_{i}r_{t-i}+X_{t-lag}+\epsilon_{t}$$
+$$r_{t,lag}=\sum_{i=1}^{\rho}\beta_{i}r_{t-i}+X_{t-lag}+\epsilon_{t}$$
 
 for *lag=0,1,...,nlag*, being *X<sub>t-lag</sub>* the lagged environmental variable at year *t-lag*. Then, we have an autoregressive model for each of the lagged environmental variables. The AIC values of the above models are compared, and the lagged environmental variable whose model reports the lowest AIC is used in the KBPM fit, except if the argument 'lag' is used.
 
@@ -312,7 +316,7 @@ control_ar <- list( nlag=3, ar_cor=TRUE)
 hake_env_ar <- knobi_env( hake_n_results, data = data, control = control_ar)
 ```
 
-The output object reports a data frame with the AIC values obtained for the AR model considering each environmental variable(s) and each lag considered in the analysis compared to the AR model considering only the autocorrelation for the KBPM base SP residuals. A plot with the AIC values for each model is also represented. In the output object `env_aic` represents the AIC values for each AR model and `selected_lag` represent the lag corresponding to the model with the lowest AIC.
+A plot with the AIC values for each model is also represented. In the output object `env_aic` represents the AIC values for each AR model and `selected_lag` represent the lag corresponding to the model with the lowest AIC.
 
 ```{r}
 hake_env_ar$env_aic
@@ -408,7 +412,7 @@ projections <- knobi_proj( knobi_results=hake_n_results, c=C)
 Running the name of the output object the data frame with the projections for each scenario are printed. Details of the additional output information are provided in the help page.
 
 ```{r}
-head(projections)
+projections
 ```
 
 
@@ -428,11 +432,11 @@ env <- data.frame( Tmax_cte=c(19,19,19,19,19),
 C <- C[(1:5),]
 ```
 
-Note that as you can see below, in this case, in addition to the plot with the results of the base KBPM model, different plot panels for each catch or fishing mortality scenario depending on the model and the environmental scenario; and, on the other hand, for each environmental scenario depending on the model and the catch or fishing mortality scenario are provided.
+Note that, as shown below, in this case, in addition to the plot with the results from the base KBPM model, additional plots are provided: (1) panels for each catch or fishing mortality scenario, depending on the model and environmental scenario; and (2) the same information, but now presented by each environmental scenario, depending on the model and catch or fishing mortality.
 
 ```{r,  fig.width=6, fig.height=4, fig.align = 'center'}
 env_projections <- knobi_proj(hake_n_results, hake_n_environmental, c=C, env=env)
-head(env_projections)
+env_projections
 ```
 
 The output list also contains the projections for each of the scenarios catches and environmental scenarios. Details of the output are available in the help page.
@@ -448,7 +452,7 @@ ff <- rep(fmsy,5)
 f <- data.frame( f=ff, f12=ff*1.2, f08=ff*0.8)
 
 f_projections <- knobi_proj( hake_n_results, f=f, env_results=hake_n_environmental, env=env)
-head(f_projections)
+f_projections
 ```
 
 
@@ -464,7 +468,7 @@ env <- list( climate_1 = data.frame( AMO=c(0.2,0.2,0.3,0.3,0.4),
                                      Tmax=c(19,20,21,22,23)))
 
 multiproj <- knobi_proj( hake_n_results, hake_n_multi, c=C, env=env)
-head(multiproj)
+multiproj
 ```
 
 

@@ -113,8 +113,8 @@ kbpm_error <- function( knobi_results, env_results=NULL, plot_out) {
 
     res_df<-data.frame(Residuals=c(residuals_b,residuals_a,residuals_m),
                       Model=c(rep("Base KBPM",length(residuals_b)),
-                              rep("Env. Additive Model",length(residuals_a)),
-                              rep("Env. Multiplicative Model",length(residuals_m))),
+                              rep("Environmental Additive",length(residuals_a)),
+                              rep("Environmental Multiplicative",length(residuals_m))),
                       Year=rep(knobi_results$df$Year,3))
 
     res_plot<-ggplot2::ggplot(data=res_df,ggplot2::aes(x=Year,y=Residuals,color=Model)) + ggplot2::theme_bw() +

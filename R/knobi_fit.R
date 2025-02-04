@@ -70,7 +70,9 @@
 #' where \eqn{SP_{t}} is the surplus production, \eqn{\overline{B}_{t}} is the average biomass or SSB (mean of two consecutive years), \eqn{r} is the population growth rate parameter, and \eqn{K} is the carrying capacity. The subscript \eqn{t} denotes the time (years).  
 #' Pella and Tomlinson model (1969) (Eq. 2):  
 #' \deqn{SP_{t} = (r/p) \overline{B}_{t} (1-(\overline{B}_{t}/K)^{p})}
-#' where \eqn{SP_{t}} is the surplus production, \eqn{\overline{B}_{t}} is the average biomass or SSB,  \eqn{r} is the population growth rate parameter, \eqn{K} is the carrying capacity and \eqn{p} is the asymmetry parameter. The subscript \eqn{t} denotes the time (years).
+#' where \eqn{SP_{t}} is the surplus production, \eqn{\overline{B}_{t}} is the average biomass or SSB, \eqn{r} is the population growth rate parameter, \eqn{K} is the carrying capacity and \eqn{p} is the asymmetry parameter. The subscript \eqn{t} denotes the time (years).
+#' 
+#' It should be noted that, in order to associate the average biomass or SSB with the catch series, the SSB time series must be one year longer than the catch series. If both time series have the same length, the last year of catch data will be excluded, and a warning will be displayed in the R console.
 #'
 #' The recruitment values and the F_input estimates are included to get an overview of the stock status, but are not needed for the KBPM fitting. Similarly, the input reference points are only used for comparison purposes.
 #'

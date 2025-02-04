@@ -10,7 +10,7 @@
 #' 
 #' The stock's data can be obtained using the following R code:
 #' 
-#' ```r
+#' ```
 #' # Hake northern stock data  
 #' 
 #' hake_n <- icesSAG::getSAG( stock = "Hake", year = 2021)  
