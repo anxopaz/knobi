@@ -25,9 +25,7 @@
 #' @param plot_dir Optional. Directory where the folder for saving the plots will be created. Required when 'plot_out=TRUE'. The default value is taken from the input in the \code{\link{knobi_fit}} function.
 #' @param plot_filename Optional. Name of the folder that will contain the plots. Required when 'plot_out=TRUE'. The default value is taken from the input in the \code{\link{knobi_fit}} function.
 #'
-#' @details
-#' 
-#' It is important to mention that the environmental variable(s), in a first step, are standardized, in order to make their scale and magnitude comparable. To do this, each variable is subtracted from its mean and divided by its standard deviation.
+#' @details It is important to mention that the environmental variable(s), in a first step, are standardized, in order to make their scale and magnitude comparable. To do this, each variable is subtracted from its mean and divided by its standard deviation.
 #' 
 #' Additive environmental model adds the following term on the right hand of Eq. (1) or Eq. (2) described in \code{\link{knobi_fit}} function: \eqn{cX_{t-lag}B_{t}}, being \eqn{X_{t-lag}} the environmental variable at time \eqn{t-lag} and \eqn{B_{t}} the biomass or SSB at time \eqn{t}.
 #' 

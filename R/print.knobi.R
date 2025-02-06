@@ -28,7 +28,7 @@ print.knobi <- function(x, ...){
 
   if(!is.null(x$plots) & is.null(x$plots3D)){
     cat("\n Projections: \n \n")
-    print(subset(x$df, Sc!='input'))
+    print(subset(x$df, Sc!='input'), row.names = F)
     cat("\n \n")
 
   } else if(is.null(x$mult)){

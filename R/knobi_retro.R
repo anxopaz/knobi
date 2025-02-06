@@ -5,7 +5,7 @@
 #' @description This function performs a retrospective analysis that evaluates the robustness of the KBPM fit to the systematic deletion of recent data.
 #'
 #' @param knobi_results The object resulting from the \code{\link{knobi_fit}} function, which are the results of the base KBPM fit.
-#' @param nR Number of retrospective patterns. 5 by default. See details.
+#' @param nR Number of retrospective peels to fit the model peeling off from 1 to nR years of data. 5 by default. See details.
 #' @param yR Optional. A vector representing the final years of the catch time series for each of the retrospective models. See details.
 #' @param yR0 Optional. A vector representing the starting years of the catch time series for each of the retrospective models. This vector must be the same length as the yR vector. By default, the catch time series is assumed to start in the same year as the original fit.
 #' @param env_results Optional. The object resulting from the \code{\link{knobi_env}} function. A list containing the results of the environmental KBPM fit. If this argument is provided, the retrospective analysis is carried out for the base and the environmental KBPM models.
@@ -15,7 +15,7 @@
 #'
 #' @details There are different options for defining retrospective fits:  
 #' 
-#' (1) Usage of 'nR' argument. This argument specifies the number of retrospective patterns. By using this argument, it is implied that the retrospective fits will consist of systematically deleting the last year of data, up to the number of years specified by 'nR'.  
+#' (1) Usage of 'nR' argument. This argument specifies the number of retrospective peels. By using this argument, it is implied that the retrospective fits will consist of systematically deleting the last year of data, up to the number of years specified by 'nR'.  
 #' 
 #' (2) Usage of 'yR' argument. This argument specifies the final years of the catch time series for each of the retrospective models, providing greater flexibility in choosing the years from which to delete information. The number of retrospective fits will correspond to the length of the 'yR' vector. Additionally, different starting years can be set using the 'yR0' argument. 
 #' 
