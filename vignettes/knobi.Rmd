@@ -176,12 +176,13 @@ In step (3) environmental covariables can be included as additive and multiplica
 
 * Additive model:
 
-$$SP_{t}= \frac{r}{p}\overline{B}_{t}\left(1-\left( \frac{\overline{B}_{t}}{K}\right) ^{p}\right) + cX_{t-lag}\overline{B}_{t}$$ (5)
+$$SP_{t}= \frac{r}{p}\overline{B}_{t}\left(1-\left( \frac{\overline{B}_{t}}{K}\right) ^{p}\right) + cX_{t-lag}\overline{B}_{t}$$ Eq. (5)  
+
 being *c* the parameter that represent the effect of the lagged environmental variable *X<sub>t-lag</sub>* (*t* index represents years and $lag$ represent the response variable $lag$, as explained below).
 
 * Multiplicative model:
 
-$$SP_{t}= \frac{r}{p}\overline{B}_{t}\left(1-\left( \frac{\overline{B}_{t}}{K}\right) ^{p}\right)exp^{cX_{t-lag}}$$ (6)
+$$SP_{t}= \frac{r}{p}\overline{B}_{t}\left(1-\left( \frac{\overline{B}_{t}}{K}\right) ^{p}\right)exp^{cX_{t-lag}}$$ Eq. (6)
 
 
 `knobi_env` inputs are the object returned by `knobi_fit` and a `data` object containing, at least, the mandatory environmental information required for the fit: the `env` argument, which is a data frame containing the values of each one of the environmental variable(s) in one column; and the `years` argument, which contains the years in which the environmental variable(s) are reported.
