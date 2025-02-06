@@ -462,7 +462,7 @@ f_projections
 In case of `multicovar=TRUE` in `knobi_env`, the `env` argument must be a list in which each item is a data frame containing the values of the variables for a specific environmental scenario. In the following scenario we have two scenarios, "climate_1" and "climate_2", and each of them we provide values of the two covariables, "AMO" and "TMax_Vigo", which are the ones included in the environmental fit. 
 
 
-```{r}
+```{r, fig.width=6, fig.height=4, fig.align = 'center'}
 env <- list( climate_1 = data.frame( AMO=c(0.2,0.2,0.3,0.3,0.4),
                                      Tmax=c(19,19,20,20,21)),
              climate_2 = data.frame( AMO=c(0.2,0.3,0.4,0.5,0.6),
