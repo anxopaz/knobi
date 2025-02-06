@@ -292,7 +292,7 @@ Furthermore, it is also possible to fit the environmental models considering sev
 
 Below you can see how we introduce the same data set as in previous examples but in the control we set `multicovar=TRUE` so that the two variables, “AMO” and “TMax”, are considered in the environmental fit. Note that “AMO” is 2 years lagged whereas “TMAX” is 3 years lagged respect the SP.
 
-```{r}
+```{r, fig.width=6, fig.height=4, fig.align = 'center'}
 control <- list( lag=c(2,3), multicovar=TRUE)
 hake_n_multi <- knobi_env( hake_n_results, data, control)
 ```
@@ -447,7 +447,7 @@ The output list also contains the projections for each of the scenarios catches 
 
 Alternatively, projections can be based on fishing mortality. The scenarios presented below have been created from the estimated *F<sub>msy</sub>* in the `knobi_fit` analysis.
 
-```{r}
+```{r, fig.width=6, fig.height=4, fig.align = 'center'}
 fmsy <- hake_n_results$BRPs['F_MSY']
 ff <- rep(fmsy,5)
 f <- data.frame( f=ff, f12=ff*1.2, f08=ff*0.8)
