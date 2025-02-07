@@ -53,18 +53,19 @@
 #' ### With environmental information
 #'
 #' # In this case, in addition to the previous example, the 'knobi_env' example
-#' # has to be run at first
+#' # has to be run at first, where AMO variable was selected in the fit
 #'
 #' # We include the future values of the environmental variable(s) in a data
 #' # frame containing the environmental covariable values for the projected
 #' # years. Three scenarios are considered:
-#' # (i) Constant maximum year temperature equal to 19,
-#' # (ii) Temperature equal to 19 and then constant raise of 0.5 degrees
-#' # (iii) Temperature equal to 19 and then constant raise of 1 degrees
+#' # (i) Constant AMO equal to last year's AMO,
+#' # (ii) Constant AMO equal to last year's AMO with a 50% increment
+#' # (iii) Constant AMO equal to last year's AMO with a 50% decrease
 #'
-#' env<-data.frame(Tmax_cte=c(19,19,19,19,19),
-#'                Tmax_05=c(19,19.5,20,20.5,21),
-#'                Tmax_1=c(19,20,21,22,23))
+#' last_AMO <- Env$AMO[length(Env$AMO)]
+#' env <- data.frame( AMOi=rep(last_AMO,5),
+#'                    AMOii=rep(last_AMO*1.5,5),
+#'                    AMOiii=rep(last_AMO*0.5,5))
 #'
 #' # Based on the previous objects we can apply the projection function.
 #'
@@ -93,9 +94,9 @@
 #' # each item is a data frame for each environmental scenario
 #'
 #' env<-list(climate_1=data.frame(AMO=c(0.2,0.2,0.3,0.3,0.4),
-#'                               Tmax=c(19,19,20,20,21)),
+#'                               NAO=c(0.2,0.2,0.3,0.3,0.4)),
 #'           climate_2=data.frame(AMO=c(0.2,0.3,0.4,0.5,0.6),
-#'                               Tmax=c(19,20,21,22,23)))
+#'                               NAO=c(0.2,0.2,0.3,0.3,0.4)))
 #'
 #' knobi_proj(knobi_results, knobi_environmental2, c=C, env=env)
 #' }

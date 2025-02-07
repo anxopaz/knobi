@@ -187,7 +187,7 @@ $$SP_{t}= \frac{r}{p}\overline{B}_{t}\left(1-\left( \frac{\overline{B}_{t}}{K}\r
 
 `knobi_env` inputs are the object returned by `knobi_fit` and a `data` object containing, at least, the mandatory environmental information required for the fit: the `env` argument, which is a data frame containing the values of each one of the environmental variable(s) in one column; and the `years` argument, which contains the years in which the environmental variable(s) are reported.
 
-In the following example, we create a data frame in which we introduce the years in which the environmental variables are available, which is from 1973 to 2020. Then, we create two columns containing the values of Atlantic Multidecadal Oscillation index (AMO) and the Vigo's annual maximum temperature variables. Finally, we cut the data frame for starting in the first year of the KBPM fit data minus the value of the nlag or lag argument (below, a detailed explanation of this argument is provided).
+In the following example, we create a data frame in which we introduce the years in which the environmental variables are available, which is from 1973 to 2020. Then, we create two columns containing the values of Atlantic Multidecadal Oscillation (AMO) and the North Atlantic Oscillation (NAO) indices. Finally, we cut the data frame for starting in the first year of the KBPM fit data minus the value of the nlag or lag argument (below, a detailed explanation of this argument is provided).
 
 
 ```{r}
@@ -205,7 +205,7 @@ Now, we create the `data` list
 
 ```{r}
 data <- list(
-  env = data.frame( AMO=Env$AMO, Tmax=Env$TMax),
+  env = data.frame( AMO=Env$AMO, NAO=Env$NAO),
   years = Env$years)
 ```
 
@@ -290,7 +290,7 @@ There is also the possibility of fixing which lag is used  in the relation among
 
 Furthermore, it is also possible to fit the environmental models considering several variables at the same time using `control$multicovar = TRUE`. This means that *cX<sub>t</sub>* is replaced by $\sum_{i=1}^{N} c_i X_{t,i}$ in Eq. (5) and Eq. (6), where index *N* represents the number of environmental variables.
 
-Below you can see how we introduce the same data set as in previous examples but in the control we set `multicovar=TRUE` so that the two variables, “AMO” and “TMax”, are considered in the environmental fit. Note that “AMO” is 2 years lagged whereas “TMAX” is 3 years lagged respect the SP.
+Below you can see how we introduce the same data set as in previous examples but in the control we set `multicovar=TRUE` so that the two variables, “AMO” and “NAO”, are considered in the environmental fit. Note that “AMO” is 2 years lagged whereas “NAO” is 3 years lagged respect the SP.
 
 ```{r, fig.width=6, fig.height=4, fig.align = 'center'}
 control <- list( lag=c(2,3), multicovar=TRUE)
@@ -372,7 +372,7 @@ knobi_retro( hake_n_results,
              yR0 = c(1990,1995,1995))
 ```
 
-The environmental fit information can be considered too in the retrospective analysis through the `env_results` argument, where the result of the `knobi_environmental` function has to be provided. For environmental models, both the estimated BRPs and the plotted production curve correspond to a value of the scaled environmental variable equal to the mean of the time series, i.e. $X_t=0$, which cancels out the environmental effect in the equations defining both models as it has been explained in the 'knobi_env` function help's details. In this case a panel of plots is provided, where each graph corresponds with a different model.
+The environmental fit information can be considered too in the retrospective analysis through the `env_results` argument, where the result of the `knobi_environmental` function has to be provided. For environmental models, both the estimated BRPs and the plotted production curve correspond to a value of the scaled environmental variable equal to the mean of the time series, i.e. $X_t=0$, which cancels out the environmental effect in the equations defining both models as it has been explained in the `knobi_env` function help's details. In this case a panel of plots is provided, where each graph corresponds with a different model.
 
 ```{r,  fig.width=6, fig.height=4, fig.align = 'center'}
 knobi_retro(hake_n_results, hake_n_environmental, nR = 3); hake_n_retros
@@ -421,14 +421,15 @@ projections
 
 There is the possibility of considering the environmental information in the projections. For this purpose, the `knobi_env` output and the new environmental values for the future years `env` argument must be provided.
 
-In the current example, three scenarios are considered: (i) Constant maximum year temperature equal to 19 degrees (centigrade); (ii) temperature equal to 19 degrees and then constant raise of 0.5 degrees; and (iii) temperature equal to 19 degrees and then constant raise of 1 degrees.
+In the current example, three scenarios are considered: (i) Constant AMO equal to last year's AMO; (ii) constant AMO equal to last year's AMO with a 50% increment; and (iii) constant AMO equal to last year's AMO with a 50% decrease.
 
 
 
 ```{r}
-env <- data.frame( Tmax_cte=c(19,19,19,19,19),
-                   Tmax_05=c(19,19.5,20,20.5,21),
-                   Tmax_1=c(19,20,21,22,23))
+last_AMO <- Env$AMO[length(Env$AMO)]
+env <- data.frame( AMOi=rep(last_AMO,5),
+                   AMOii=rep(last_AMO*1.5,5),
+                   AMOiii=rep(last_AMO*0.5,5))
 
 C <- C[(1:5),]
 ```
@@ -459,14 +460,14 @@ f_projections
 
 #### Case of considering multicovariate environmental models #### 
 
-In case of `multicovar=TRUE` in `knobi_env`, the `env` argument must be a list in which each item is a data frame containing the values of the variables for a specific environmental scenario. In the following scenario we have two scenarios, "climate_1" and "climate_2", and each of them we provide values of the two covariables, "AMO" and "TMax_Vigo", which are the ones included in the environmental fit. 
+In case of `multicovar=TRUE` in `knobi_env`, the `env` argument must be a list in which each item is a data frame containing the values of the variables for a specific environmental scenario. In the following scenario we have two scenarios, "climate_1" and "climate_2", and each of them we provide values of the two covariables, "AMO" and "NAO", which are the ones included in the environmental fit. 
 
 
 ```{r, fig.width=6, fig.height=4, fig.align = 'center'}
 env <- list( climate_1 = data.frame( AMO=c(0.2,0.2,0.3,0.3,0.4),
-                                     Tmax=c(19,19,20,20,21)),
+                                     NAO=c(0.2,0.2,0.3,0.3,0.4)),
              climate_2 = data.frame( AMO=c(0.2,0.3,0.4,0.5,0.6),
-                                     Tmax=c(19,20,21,22,23)))
+                                     NAO=c(0.2,0.3,0.4,0.5,0.6)))
 
 multiproj <- knobi_proj( hake_n_results, hake_n_multi, c=C, env=env)
 multiproj

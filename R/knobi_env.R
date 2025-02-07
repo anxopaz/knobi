@@ -90,7 +90,7 @@
 #' Env <- Env[(ind-nlag):ind1,]
 #'
 #' # Now we create the environmental list
-#' data <- list(env=data.frame(AMO=Env$AMO,Tmax=Env$TMax),
+#' data <- list(env=data.frame(AMO=Env$AMO,NAO=Env$NAO),
 #'            years=Env$years)
 #' control <- list(nlag=nlag)
 #'
