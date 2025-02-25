@@ -70,12 +70,16 @@ knobi_retro <- function( knobi_results, env_results=NULL, nR=5, yR=NULL, yR0=NUL
   
   pella <- knobi_results$control$pella
   
+  
   if(plot_out==T){
     
     old_dir <- getwd()
     
     if (is.null(plot_dir)) plot_dir <- knobi_results$control$plot_settings$plot_dir
+    setwd(plot_dir)
+    
     if (is.null(plot_filename)) plot_filename <- knobi_results$control$plot_settings$plot_filename
+    if ( !plot_filename %in% list.dirs( full.names = FALSE)) dir.create( plot_filename)
     
     setwd(paste0(plot_dir,"/",plot_filename))
     

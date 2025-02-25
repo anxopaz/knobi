@@ -129,15 +129,19 @@ knobi_proj <- function( knobi_results, env_results=NULL, c=NULL, f=NULL, env=NUL
     model_m <- function(Bt1,Bt,Xt,K,r,p,c,Et) Bt+(r/p)*((Bt1+Bt)/2)*(1-((Bt1+Bt)^p)/(K^p*2^p))*exp(Et%*%c)-Xt*((Bt1+Bt)/2)-Bt1
   }
 
+  
   if(plot_out==T){
-
+    
     old_dir <- getwd()
-
+    
     if (is.null(plot_dir)) plot_dir <- knobi_results$control$plot_settings$plot_dir
+    setwd(plot_dir)
+    
     if (is.null(plot_filename)) plot_filename <- knobi_results$control$plot_settings$plot_filename
-
+    if ( !plot_filename %in% list.dirs( full.names = FALSE)) dir.create( plot_filename)
+    
     setwd(paste0(plot_dir,"/",plot_filename))
-
+    
   }
 
 
