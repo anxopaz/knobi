@@ -85,6 +85,8 @@
 #' KBPMs have also proven their usefulness for the multispecies management objectives. The KBPM approach can be applied to analyze the joint dynamics of the targeted fish species within a community, using the aggregated biomass and catch data, defining in this way a simple data-limited ecosystem model to assess the ecosystem status (see example).
 #' 
 #' @examples
+#' 
+#' \dontrun{
 #'
 #' library(knobi)
 #'
@@ -157,6 +159,7 @@
 #' # the SP being less than 0 for some year.
 #' knobi_results2
 #'
+#' }
 #'
 #' @references
 #' 

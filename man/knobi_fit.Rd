@@ -87,6 +87,8 @@ KBPMs have also proven their usefulness for the multispecies management objectiv
 }
 \examples{
 
+\dontrun{
+
 library(knobi)
 
 data(knobi_dataset)
@@ -158,6 +160,7 @@ knobi_results2<-knobi_fit(data)
 # the SP being less than 0 for some year.
 knobi_results2
 
+}
 
 }
 \references{
