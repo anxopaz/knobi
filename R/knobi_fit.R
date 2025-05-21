@@ -5,79 +5,85 @@
 #' @description This function, that is the main function of the \code{knobi} package, fits a type of surplus production models named known-biomass production models (KBPM) (MacCall, 2002). The surplus production curve is fitted using the observed catch time series and the biomass or SSB (Spawning Stock Biomass) estimates derived from the fit of another stock assessment model.
 #'
 #' @param data A list containing the data. \itemize{
-#' \item Catch: catch time series observations.
-#' \item Biomass: biomass time series estimated through a data-rich stock assessment model. If available, otherwise enter SSB in the next argument.
-#' \item SSB: spawning stock biomass time series estimated through a data-rich stock assessment model. If available, otherwise introduce biomass in the previous argument.
-#' \item years: optional. Years associated to the observed catch time series. By default, an increasing natural sequence from 1 to the total number of catch observations.
-#' \item Stock: optional. Character string with the stock name for using in the plot subtitles.
-#' \item Recruitment: optional. Recruitment time series estimated through a data-rich stock assessment model. See details.
-#' \item F_input: optional. Fishing mortality time series estimated through a data-rich stock assessment model. See details.
-#' \item RP: optional. Estimates of the following biological reference points derived from the fit of a data-rich stock assessment model (see details): \itemize{
-#' \item MSY: Maximum Sustainable Yield.
-#' \item F_MSY: fishing mortality at MSY.
-#' \item B_MSY: biomass at MSY (or SSB at MSY depending on the value of the 'method' argument, see control list).
-#' \item K: carrying capacity.}}
+#'   \item Catch: catch time series observations.
+#'   \item Biomass: biomass time series estimated through a data-rich stock assessment model. If available, otherwise enter SSB in the next argument.
+#'   \item SSB: spawning stock biomass time series estimated through a data-rich stock assessment model. If available, otherwise introduce biomass in the previous argument.
+#'   \item years: optional. Years associated to the observed catch time series. By default, an increasing natural sequence from 1 to the total number of catch observations.
+#'   \item Stock: optional. Character string with the stock name for using in the plot subtitles.
+#'   \item Recruitment: optional. Recruitment time series estimated through a data-rich stock assessment model. See details.
+#'   \item F_input: optional. Fishing mortality time series estimated through a data-rich stock assessment model. See details.
+#'   \item RP: optional. Estimates of the following biological reference points derived from the fit of a data-rich stock assessment model (see details): \itemize{
+#'     \item MSY: Maximum Sustainable Yield.
+#'     \item F_MSY: fishing mortality at MSY.
+#'     \item B_MSY: biomass at MSY (or SSB at MSY depending on the value of the 'method' argument, see control list).
+#'     \item K: carrying capacity.
+#'   }
+#' }
 #' @param control A list containing the following control parameters. \itemize{
-#' \item pella: logical. If TRUE, the Pella-Tomlinson model is applied; if FALSE (default), the Schaefer model is used. See details.
-#' \item start_r: optional. Starting value for the growth rate parameter r (intrinsic rate of natural increase). See details.
-#' \item start_K: optional. Starting value for the carrying capacity parameter K (maximum population size where growth remains positive). See details.
-#' \item start_p: optional. Starting value for the shape parameter p, used exclusively in the Pella-Tomlinson model. See details.
-#' \item method: specifies whether the model is fitted using 'SSB' (spawning stock biomass) or 'Biomass'. This argument is only required if both time series, 'SSB' and 'Biomass', are provided.}
+#'   \item pella: logical. If TRUE, the Pella-Tomlinson model is applied; if FALSE (default), the Schaefer model is used. See details.
+#'   \item start_r: optional. Starting value for the growth rate parameter r (intrinsic rate of natural increase). See details.
+#'   \item start_K: optional. Starting value for the carrying capacity parameter K (maximum population size where growth remains positive). See details.
+#'   \item start_p: optional. Starting value for the shape parameter p, used exclusively in the Pella-Tomlinson model. See details.
+#'   \item method: specifies whether the model is fitted using 'SSB' (spawning stock biomass) or 'Biomass'. This argument is only required if both time series, 'SSB' and 'Biomass', are provided.
+#' }
 #' @param plot_out Logical. If TRUE, files are generated with plots for both the input time series and the fitting results. Defaults to FALSE, which means that the plots will be displayed only in the window.
-#' @param plot_dir optional. Directory for saving the plot files. Required when plot_out=TRUE. Current directory by default.
-#' @param plot_filename optional. Name of the folder that will contain the plot files. By default, "knobi_results". Required when plot_out=TRUE.
-#'
+#' @param plot_dir optional. Directory for saving the plot files. Required when \code{plot_out=TRUE}. Current directory by default.
+#' @param plot_filename optional. Name of the folder that will contain the plot files. By default, "knobi_results". Required when \code{plot_out=TRUE}.
 #'
 #' @return The results of the KBPM fit include the following: \itemize{
-#' \item params: model parameters estimates.
-#' \item df: the data used for the model.
-#' \item BRPs: biological reference points estimates: \itemize{
-#' \item K: carrying capacity.
-#' \item MSY: maximum sustainable yield (MSY).
-#' \item B_MSY: biomass at MSY.
-#' \item F_MSY: fishing mortality at MSY.
-#' \item MSYoverK: ratio of MSY and K.}
-#' \item residuals: Pearson's residuals calculated as (observations-estimates)/sd(observations).
-#' \item performance_metrics: data frame of accuracy and model performance measures: \itemize{
-#' \item SER: standard error of the regression, calculated as the root of the rate between the sum of residual squares and the degrees of freedom of the regression.
-#' \item R-squared: coefficient of determination.
-#' \item adj-R-squared: adjusted coefficient of determination.
-#' \item AIC: Akaike information criterion.
-#' \item RMSE: root mean squared error (observed vs. estimated values).
-#' \item MAPE: mean absolute percentage error (observed vs. estimated values).}
-#' \item input: the input list updated with the annual average biomass ($input$Average_Biomass), the surplus production ($input$SP) and the F estimates derived from the fit ($input$F_output).
-#' \item control: the updated control settings of the fit.
-#' \item optimx: list of some results provided by \code{\link[optimx]{optimx}}: \itemize{
-#' \item value: value of the objective function in the minimization process.
-#' \item convergence: integer code. ‘0’ indicates successful completion in the optimization.
-#' \item message: character string giving any additional information returned by the optimizer, or NULL.}
+#'   \item params: model parameters estimates.
+#'   \item df: the data used for the model.
+#'   \item BRPs: biological reference points estimates: \itemize{
+#'     \item K: carrying capacity.
+#'     \item MSY: maximum sustainable yield (MSY).
+#'     \item B_MSY: biomass at MSY.
+#'     \item F_MSY: fishing mortality at MSY.
+#'     \item MSYoverK: ratio of MSY and K.
+#'   }
+#'   \item residuals: Pearson's residuals calculated as (observations-estimates)/sd(observations).
+#'   \item performance_metrics: data frame of accuracy and model performance measures: \itemize{
+#'     \item SER: standard error of the regression, calculated as the root of the rate between the sum of residual squares and the degrees of freedom of the regression.
+#'     \item R-squared: coefficient of determination.
+#'     \item adj-R-squared: adjusted coefficient of determination.
+#'     \item AIC: Akaike information criterion.
+#'     \item RMSE: root mean squared error (observed vs. estimated values).
+#'     \item MAPE: mean absolute percentage error (observed vs. estimated values).
+#'   }
+#'   \item input: the input list updated with the annual average biomass (\code{$input$Average_Biomass}), the surplus production (\code{$input$SP}) and the F estimates derived from the fit (\code{$input$F_output}).
+#'   \item control: the updated control settings of the fit.
+#'   \item optimx: list of some results provided by \code{\link[optimx]{optimx}}: \itemize{
+#'     \item value: value of the objective function in the minimization process.
+#'     \item convergence: integer code. ‘0’ indicates successful completion in the optimization.
+#'     \item message: character string giving any additional information returned by the optimizer, or NULL.
+#'   }
 #' }
-#' The plots are displayed in the plot window and also saved (if 'plot_out=TRUE') in the provided directory or in the current one (if 'plot_dir' is not provided). The following input quantities are plotted: fishing mortality time series, SSB or biomass, surplus production and catch time series. Plots of catch over fishing mortality, fishing mortality over SSB (or biomass), and catch over SSB (or biomass) time series with a smooth line from a "loess" regression are also available. Plot of input-output time series of fishing mortality are also provided and includes horizontal lines for both, input and output, fishing mortalities at MSY (one line if input F_MSY is NULL). Fishing mortality relative to F_MSY is also plotted including an horizontal line at one (note that values greater than 1 indicate an F greater than F_MSY). The analogous SSB (or biomass) plots are also reported. On the other hand, the fitted surplus production curve is plotted twice with the SSB (or biomass) and SP observations (first) and with the catch and SP observations (second). Finally, a plot with the KBPM residuals is reported.
 #'
+#' The plots are displayed in the plot window and also saved (if \code{plot_out=TRUE}) in the provided directory or in the current one (if \code{plot_dir} is not provided). The following input quantities are plotted: fishing mortality time series, SSB or biomass, surplus production and catch time series. Plots of catch over fishing mortality, fishing mortality over SSB (or biomass), and catch over SSB (or biomass) time series with a smooth line from a "loess" regression are also available. Plot of input-output time series of fishing mortality are also provided and includes horizontal lines for both, input and output, fishing mortalities at MSY (one line if input F_MSY is NULL). Fishing mortality relative to F_MSY is also plotted including an horizontal line at one (note that values greater than 1 indicate an F greater than F_MSY). The analogous SSB (or biomass) plots are also reported. On the other hand, the fitted surplus production curve is plotted twice with the SSB (or biomass) and SP observations (first) and with the catch and SP observations (second). Finally, a plot with the KBPM residuals is reported.
 #'
 #' @author
 #' \itemize{
-#' \item{Anxo Paz}
-#' \item{Marta Cousido-Rocha}
-#' \item{Santiago Cerviño López}
-#' \item{Maria Grazia Pennino}
+#'   \item Anxo Paz
+#'   \item Marta Cousido-Rocha
+#'   \item Santiago Cerviño López
+#'   \item Maria Grazia Pennino
 #' }
 #'
 #' @details The KBPMs implemented in the current package are explained below.  
-#' 
+#'
 #' Schaefer model (1954) (Eq. 1):  
-#' \deqn{SP_{t} = r \overline{B}_{t} (1-(\overline{B}_{t}/K))}
+#' \deqn{SP_{t} = r \overline{B}_{t} (1-(\overline{B}_{t}/K))}{SP[t] = r * B[t] * (1 - B[t]/K)}
 #' where \eqn{SP_{t}} is the surplus production, \eqn{\overline{B}_{t}} is the average biomass or SSB (mean of two consecutive years), \eqn{r} is the population growth rate parameter, and \eqn{K} is the carrying capacity. The subscript \eqn{t} denotes the time (years).  
+#'
 #' Pella and Tomlinson model (1969) (Eq. 2):  
-#' \deqn{SP_{t} = (r/p) \overline{B}_{t} (1-(\overline{B}_{t}/K)^{p})}
+#' \deqn{SP_{t} = (r/p) \overline{B}_{t} (1-(\overline{B}_{t}/K)^{p})}{SP[t] = (r/p) * B[t] * (1 - (B[t]/K)^p)}
 #' where \eqn{SP_{t}} is the surplus production, \eqn{\overline{B}_{t}} is the average biomass or SSB, \eqn{r} is the population growth rate parameter, \eqn{K} is the carrying capacity and \eqn{p} is the asymmetry parameter. The subscript \eqn{t} denotes the time (years).
-#' 
+#'
 #' It should be noted that, in order to associate the average biomass or SSB with the catch series, the SSB time series must be one year longer than the catch series. If both time series have the same length, the last year of catch data will be excluded, and a warning will be displayed in the R console.
 #'
 #' The recruitment values and the F_input estimates are included to get an overview of the stock status, but are not needed for the KBPM fitting. Similarly, the input reference points are only used for comparison purposes.
 #'
 #' KBPMs have also proven their usefulness for the multispecies management objectives. The KBPM approach can be applied to analyze the joint dynamics of the targeted fish species within a community, using the aggregated biomass and catch data, defining in this way a simple data-limited ecosystem model to assess the ecosystem status (see example).
-#'
+#' 
 #' @examples
 #'
 #' library(knobi)

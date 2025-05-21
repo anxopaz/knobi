@@ -4,15 +4,15 @@
 \alias{knobi_retro}
 \title{KBPM retrospective analysis}
 \arguments{
-\item{knobi_results}{A list containing the results of the KBPM fit. Object provided by \code{\link{knobi_fit}} function (main package function).}
+\item{knobi_results}{The object resulting from the \code{\link{knobi_fit}} function, which are the results of the base KBPM fit.}
 
-\item{nR}{Number of retrospective patterns. 5 by default. See details.}
+\item{nR}{Number of retrospective peels to fit the model peeling off from 1 to nR years of data. 5 by default. See details.}
 
 \item{yR}{Optional. A vector representing the final years of the catch time series for each of the retrospective models. See details.}
 
 \item{yR0}{Optional. A vector representing the starting years of the catch time series for each of the retrospective models. This vector must be the same length as the yR vector. By default, the catch time series is assumed to start in the same year as the original fit.}
 
-\item{env_results}{Optional. A list containing the results of the environmental KBPM fit. Object provided by \code{\link{knobi_env}} function. If this argument is provided, the retrospective analysis is carried out for the base and the environmental KBPM models.}
+\item{env_results}{Optional. The object resulting from the \code{\link{knobi_env}} function. A list containing the results of the environmental KBPM fit. If this argument is provided, the retrospective analysis is carried out for the base and the environmental KBPM models.}
 
 \item{plot_out}{Logical. If TRUE, a file containing the plot of the retrospective fits is created. The default value is the input in the \code{\link{knobi_fit}} function.}
 
@@ -27,12 +27,15 @@ A list containing the results of the retrospective analysis, including parameter
 This function performs a retrospective analysis that evaluates the robustness of the KBPM fit to the systematic deletion of recent data.
 }
 \details{
-There are different options for defining retrospective fits:
-(1) Usage of 'nR' argument. This argument specifies the number of retrospective patterns. By using this argument, it is implied that the retrospective fits will consist of systematically deleting the last year of data, up to the number of years specified by 'nR'.
-(2) Usage of 'yR' argument. This argument specifies the final years of the catch time series for each of the retrospective models, providing greater flexibility in choosing the years from which to delete information. The number of retrospective fits will correspond to the length of the 'yR' vector. Additionally, different starting years can be set using the 'yR0' argument. 
-If both arguments, 'nR' and yR, are provided, the package will prioritize the use of 'yR'.
+There are different options for defining retrospective fits:  
 
-In the case of the environmental models, both the estimated biological reference points and the plotted production curve correspond to a value of the scaled environmental variable equal to the mean of the time series, i.e. \eqn{X_{t}=0}, which cancels out the environmental effect in the equations defining both models. For more details, such as the calculation of BRPs as a function of the environmental variable, see vignettes.
+(1) Usage of \code{nR} argument. This argument specifies the number of retrospective peels. By using this argument, it is implied that the retrospective fits will consist of systematically deleting the last year of data, up to the number of years specified by \code{nR}.  
+
+(2) Usage of \code{yR} argument. This argument specifies the final years of the catch time series for each of the retrospective models, providing greater flexibility in choosing the years from which to delete information. The number of retrospective fits will correspond to the length of the \code{yR} vector. Additionally, different starting years can be set using the \code{yR0} argument. 
+
+If both arguments, \code{nR} and \code{yR}, are provided, the package will prioritize the use of \code{yR}.
+
+As described in the \code{\link{knobi_env}} function details, in the case of the environmental models, both the estimated biological reference points and the plotted production curve correspond to a value of the scaled environmental variable equal to the mean of the time series, i.e. \eqn{X_{t}=0}, which cancels out the environmental effect in the equations defining both models. For more details, such as the calculation of BRPs as a function of the environmental variable, see vignettes.
 }
 \examples{
 

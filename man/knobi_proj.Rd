@@ -12,7 +12,7 @@
 
 \item{f}{Optional. A vector, data frame, or matrix specifying the fishing mortality values for each projected year. Multiple fishing mortality scenarios can be defined, with each column in the data frame or matrix representing a different scenario. For a single scenario, the length of the vector must match the number of projected years; for multiple scenarios, the number of rows must match the projected years. Projections are based on either future catch values or fishing mortality values, so only one of the two arguments, 'c' or 'f', is required.}
 
-\item{env}{Optional. Environmental variable(s) projections required if the environmental fit is considered to forecast the population and fishery dynamics. This fit considers the variable(s) selected in the \code{\link{knobi_env}} function. If the 'multicovar' argument of \code{\link{knobi_env}} is FALSE, tihs argument is a vector, data frame or matrix containing the values of the environmental covariates (unstandardized) for the projection years (rows) and the different catch or fishing mortality settings (columns).  On the other hand, if the 'multicovar' argument of \code{\link{knobi_env}} is TRUE, the current argument must be a list, and each entry must be a data frame or matrix corresponding to each catch or fishing mortality setting containing the values of the environmental covariates for that scenario.}
+\item{env}{Optional. Environmental variable(s) projections required if the environmental fit is provided to forecast the population and fishery dynamics. This fit considers the variable(s) selected in the \code{\link{knobi_env}} function. If the 'multicovar' argument of \code{\link{knobi_env}} is FALSE, this argument is a vector, data frame or matrix containing the values of the environmental covariates (unstandardized) (cols) for the projection years (rows). On the other hand, if the 'multicovar' argument of \code{\link{knobi_env}} is TRUE, the current argument must be a list, and each entry must be a data frame or matrix corresponding to each environmental scenario containing the values of the considered covariates for each scenario.}
 
 \item{plot_out}{Logical. If TRUE, a file containing the plot of the retrospective fits is created. The default value is the input in the \code{\link{knobi_fit}} function.}
 
@@ -22,12 +22,12 @@
 }
 \value{
 A list containing the projection results. \itemize{
-\item df: data frame containing the projected time series. The rows correspond to the projection years, while the columns represent stock quantities: biomass or SSB, surplus production (SP), catch (C), and fishing mortality (F). Additionally, three columns specify the catch or fishing mortality scenario (Sc), the model used, and the environmental scenario (EnvSc).
+\item df: data frame containing the projected time series. The rows correspond to the projection years, while the columns represent stock quantities: biomass or SSB, surplus production (SP), catch (C), and fishing mortality (F). Three additional columns specify the catch or fishing mortality scenario (Sc), the model used, and the environmental scenario (EnvSc).
 \item plots: list containing the plots with the projections. Each plot is a panel plot that includes four subplots representing biomass or SSB, surplus production, fishing mortality, and catches for each catch or fishing mortality scenario and for each environmental scenario (if they is provided).}
 The resulting plots are displayed in the plot window and are also saved (if plot_out="TRUE") in the  provided directory or in the same directory as \code{link{knobi_fit}}.
 }
 \description{
-This function forecasts population and fishery dynamics under a defined set of management targets. It projects the time series of biomass (or SSB) and the surplus production for a range of future catch or fishing mortality scenarios.
+This function forecasts population and fishery dynamics under a defined set of management targets. It projects the time series of biomass (or SSB) and the surplus production for a set of future catch or fishing mortality scenarios.
 }
 \examples{
 
@@ -56,18 +56,19 @@ knobi_proj(knobi_results, c=C)
 ### With environmental information
 
 # In this case, in addition to the previous example, the 'knobi_env' example
-# has to be run at first
+# has to be run at first, where AMO variable was selected in the fit
 
 # We include the future values of the environmental variable(s) in a data
 # frame containing the environmental covariable values for the projected
 # years. Three scenarios are considered:
-# (i) Constant maximum year temperature equal to 19,
-# (ii) Temperature equal to 19 and then constant raise of 0.5 degrees
-# (iii) Temperature equal to 19 and then constant raise of 1 degrees
+# (i) Constant AMO equal to last year's AMO,
+# (ii) Constant AMO equal to last year's AMO with a 50\% increment
+# (iii) Constant AMO equal to last year's AMO with a 50\% decrease
 
-env<-data.frame(Tmax_cte=c(19,19,19,19,19),
-               Tmax_05=c(19,19.5,20,20.5,21),
-               Tmax_1=c(19,20,21,22,23))
+last_AMO <- Env$AMO[length(Env$AMO)]
+env <- data.frame( AMOi=rep(last_AMO,5),
+                   AMOii=rep(last_AMO*1.5,5),
+                   AMOiii=rep(last_AMO*0.5,5))
 
 # Based on the previous objects we can apply the projection function.
 
@@ -96,9 +97,9 @@ knobi_proj(knobi_results, f=f[1:5,], env_results=env_results, env=env)
 # each item is a data frame for each environmental scenario
 
 env<-list(climate_1=data.frame(AMO=c(0.2,0.2,0.3,0.3,0.4),
-                              Tmax=c(19,19,20,20,21)),
+                              NAO=c(0.2,0.2,0.3,0.3,0.4)),
           climate_2=data.frame(AMO=c(0.2,0.3,0.4,0.5,0.6),
-                              Tmax=c(19,20,21,22,23)))
+                              NAO=c(0.2,0.2,0.3,0.3,0.4)))
 
 knobi_proj(knobi_results, knobi_environmental2, c=C, env=env)
 }

@@ -15,11 +15,11 @@
 #'
 #' @details There are different options for defining retrospective fits:  
 #' 
-#' (1) Usage of 'nR' argument. This argument specifies the number of retrospective peels. By using this argument, it is implied that the retrospective fits will consist of systematically deleting the last year of data, up to the number of years specified by 'nR'.  
+#' (1) Usage of \code{nR} argument. This argument specifies the number of retrospective peels. By using this argument, it is implied that the retrospective fits will consist of systematically deleting the last year of data, up to the number of years specified by \code{nR}.  
 #' 
-#' (2) Usage of 'yR' argument. This argument specifies the final years of the catch time series for each of the retrospective models, providing greater flexibility in choosing the years from which to delete information. The number of retrospective fits will correspond to the length of the 'yR' vector. Additionally, different starting years can be set using the 'yR0' argument. 
+#' (2) Usage of \code{yR} argument. This argument specifies the final years of the catch time series for each of the retrospective models, providing greater flexibility in choosing the years from which to delete information. The number of retrospective fits will correspond to the length of the \code{yR} vector. Additionally, different starting years can be set using the \code{yR0} argument. 
 #' 
-#' If both arguments, 'nR' and yR, are provided, the package will prioritize the use of 'yR'.
+#' If both arguments, \code{nR} and \code{yR}, are provided, the package will prioritize the use of \code{yR}.
 #' 
 #' As described in the \code{\link{knobi_env}} function details, in the case of the environmental models, both the estimated biological reference points and the plotted production curve correspond to a value of the scaled environmental variable equal to the mean of the time series, i.e. \eqn{X_{t}=0}, which cancels out the environmental effect in the equations defining both models. For more details, such as the calculation of BRPs as a function of the environmental variable, see vignettes.
 #'

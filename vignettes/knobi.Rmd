@@ -187,7 +187,7 @@ $$SP_{t}= \frac{r}{p}\overline{B}_{t}\left(1-\left( \frac{\overline{B}_{t}}{K}\r
 
 `knobi_env` inputs are the object returned by `knobi_fit` and a `data` object containing, at least, the mandatory environmental information required for the fit: the `env` argument, which is a data frame containing the values of each one of the environmental variable(s) in one column; and the `years` argument, which contains the years in which the environmental variable(s) are reported.
 
-In the following example, we create a data frame in which we introduce the years in which the environmental variables are available, which is from 1973 to 2020. Then, we create two columns containing the values of Atlantic Multidecadal Oscillation (AMO) and the North Atlantic Oscillation (NAO) indices. Finally, we cut the data frame for starting in the first year of the KBPM fit data minus the value of the nlag or lag argument (below, a detailed explanation of this argument is provided).
+In the following example, we create a data frame in which we introduce the years in which the environmental variables are available, which is from 1973 to 2020. Then, we create two columns containing the values of Atlantic Multidecadal Oscillation (AMO) and the North Atlantic Oscillation (NAO) indices. Finally, we cut the data frame for starting in the first year of the KBPM fit data minus the value of the `nlag` or `lag` argument (below, a detailed explanation of this argument is provided).
 
 
 ```{r}
