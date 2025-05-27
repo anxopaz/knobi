@@ -31,7 +31,7 @@ This function forecasts population and fishery dynamics under a defined set of m
 }
 \examples{
 
-\dontrun{
+\donttest{
 
 ### Projecting through catch with no environmental information
 

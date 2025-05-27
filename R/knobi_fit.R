@@ -86,7 +86,7 @@
 #' 
 #' @examples
 #' 
-#' \dontrun{
+#' \donttest{
 #'
 #' library(knobi)
 #'
@@ -178,6 +178,7 @@ knobi_fit <- function( data, control=NULL, plot_out=FALSE, plot_filename=NULL, p
   if( plot_out == TRUE){
 
     old_dir <- getwd()
+    on.exit( setwd(old_dir))
 
     if ( is.null(plot_dir)) plot_dir <- old_dir
     if ( is.null(plot_filename)) plot_filename <- "knobi_results"
@@ -194,8 +195,6 @@ knobi_fit <- function( data, control=NULL, plot_out=FALSE, plot_filename=NULL, p
   }
 
   if( is.null(control)) control<-list()
-
-  set.seed( 123)
 
   # Check input data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -535,8 +534,6 @@ knobi_fit <- function( data, control=NULL, plot_out=FALSE, plot_filename=NULL, p
 
   fit$performance_metrics <- errors$error_table
   fit$residuals <- errors$residuals
-
-  if( plot_out==TRUE) setwd(old_dir)
 
   class(fit)="knobi"
 

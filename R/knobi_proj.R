@@ -28,7 +28,7 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' ### Projecting through catch with no environmental information
 #'
@@ -133,6 +133,7 @@ knobi_proj <- function( knobi_results, env_results=NULL, c=NULL, f=NULL, env=NUL
   if(plot_out==T){
     
     old_dir <- getwd()
+    on.exit( setwd(old_dir))
     
     if (is.null(plot_dir)) plot_dir <- knobi_results$control$plot_settings$plot_dir
     setwd(plot_dir)
@@ -510,12 +511,6 @@ knobi_proj <- function( knobi_results, env_results=NULL, c=NULL, f=NULL, env=NUL
 
     forecast$plots[['env']] <- list( byC= plotsbyC, byEnv=plotsbyenv)
 
-  }
-
-
-  if(plot_out==TRUE){
-    cat(paste0("\n Plots successfully saved in '",getwd(),"'"),". \n")
-    setwd(old_dir)
   }
 
   names(forecast$df)[which(names(forecast$df)=='FM')] <- 'F'

@@ -125,14 +125,13 @@ There is the possibility of defining other `control` settings such as `start_r`,
 
 After preparing both lists, `data` and `control`, we can apply the `knobi_fit` function over them for fitting the KBPM model. 
 
-In addition to the arguments mentioned above, the `plot_out=TRUE` argument allows the creation of an external folder with the corresponding plots files also displayed in the plot window. We can set the folder name and its directory through the `plot_filename` and the `plot_dir` arguments, respectively. In this example, we create a folder for the plots named "hake_n" in the "Z:/knobi/HAKE/" directory.
+In addition to the arguments mentioned above, the `plot_out=TRUE` argument allows the creation of an external folder with the corresponding plots files also displayed in the plot window. We can set the folder name and its directory through the `plot_filename` and the `plot_dir` arguments, respectively.
+
 
 ```{r,eval=FALSE}
 hake_n_results <- knobi_fit( data = data, 
                              control = control,
-                             plot_out = TRUE, 
-                             plot_filename = "hake_n", 
-                             plot_dir = "Z:/knobi/HAKE/")
+                             plot_out = FALSE)
 ```
 
 Note that if the length of the input catch time series does not match with the SSB length, a warning is returned indicating that the series of catch is reduced so that the fit can be done.
@@ -221,11 +220,9 @@ Based on the arguments defined above, we apply the function as you can see below
 
 ```{r,eval=FALSE}
 hake_n_environmental <- knobi_env(knobi_results = hake_n_results, 
-                                 data = data,    
-                                 control = control,
-                                 plot_out = TRUE,
-                                 plot_filename = "hake_n",
-                                 plot_dir = "Z:/knobi/HAKE/")
+                                  data = data,    
+                                  control = control,
+                                  plot_out = FALSE)
 ```
 
 ```{r,echo=FALSE,  fig.width=6, fig.height=4, fig.align = 'center'}
@@ -338,12 +335,10 @@ Once the KBPM fit is carried out using `knobi_fit` function, its robustness to t
 ```{r,eval=FALSE}
 hake_n_retros <- knobi_retro( knobi_results = hake_n_results,         
                               nR = 5,            
-                              plot_out = TRUE,
-                              plot_filename = "hake_n",
-                              plot_dir = "Z:/knobi/HAKE/")
+                              plot_out = FALSE)
 ```
 
-The estimated surplus production curves from the retrospective analysis are plotted. The plot is displayed in the plot window and also saved (note that `plot_out=T`) in the provided directory and file, which are the same as in the `knobi_fit` function.
+The estimated surplus production curves from the retrospective analysis are plotted. The plot is displayed in the plot window and also saved if `plot_out=T` in the provided directory and file.
 
 ```{r,echo=FALSE,  fig.width=6, fig.height=4, fig.align = 'center'}
 hake_n_retros <- knobi_retro( hake_n_results, nR=5, plot_out=FALSE)

@@ -39,7 +39,7 @@ As described in the \code{\link{knobi_env}} function details, in the case of the
 }
 \examples{
 
-\dontrun{
+\donttest{
 
 library(knobi)
 

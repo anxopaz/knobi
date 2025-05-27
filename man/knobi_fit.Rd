@@ -87,7 +87,7 @@ KBPMs have also proven their usefulness for the multispecies management objectiv
 }
 \examples{
 
-\dontrun{
+\donttest{
 
 library(knobi)
 

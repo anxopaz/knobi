@@ -77,7 +77,7 @@ It is important to highlight that the results include the analysis of the AR mod
 }
 \examples{
 
-\dontrun{
+\donttest{
 
 # First, run the example of knobi_fit function
 

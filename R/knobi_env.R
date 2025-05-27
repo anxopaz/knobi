@@ -75,7 +75,7 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' # First, run the example of knobi_fit function
 #'
@@ -126,6 +126,7 @@ knobi_env <- function( knobi_results, data, control=NULL, plot_out=FALSE, plot_f
   if(plot_out==T){
 
     old_dir <- getwd()
+    on.exit( setwd(old_dir))
 
     if (is.null(plot_dir)) plot_dir <- knobi_results$control$plot_settings$plot_dir
     setwd(plot_dir)
@@ -348,8 +349,6 @@ knobi_env <- function( knobi_results, data, control=NULL, plot_out=FALSE, plot_f
       corrplot::corrplot(round(cor(as.matrix(envsel),use="na.or.complete"),2),method='circle',
                          title="Covariables correlation",mar=c(0,0,2,0),addCoef.col = "black",
                          type="lower",diag=T,p.mat = p.mat, sig.level = 0.05)
-      print(round(cor(as.matrix(envsel),use="na.or.complete"),4))
-      cat("\n")
       warning("The covariables are highly correlated (see corrplot). To avoid estimation issues, consider removing variables or setting multicovar=FALSE.")
     }
 
@@ -413,8 +412,6 @@ knobi_env <- function( knobi_results, data, control=NULL, plot_out=FALSE, plot_f
     y2  <-  y * attr(ysc, 'scaled:scale') + attr(ysc, 'scaled:center')
     y.pred2  <-  y.pred * attr(ysc, 'scaled:scale') + attr(ysc, 'scaled:center')
 
-    cat("\n This can take a while... \n")
-
     plot3D::scatter3D(x, y2, z, bty="b2", pch = 19, cex = 1, cex.axis = 0.6,
                       colkey = list(length = 0.5, width = 0.5, cex.clab = 0.8, cex.axis = 0.8),
                       xlim = c(0,max(x.pred_a)), zlim = c(0,max(z.pred_a)*1.5),
@@ -431,8 +428,6 @@ knobi_env <- function( knobi_results, data, control=NULL, plot_out=FALSE, plot_f
       grDevices::dev.off()
     }
 
-    cat("\n ... Just a little more. May the 4th be with you ... \n")
-
     plot3D::scatter3D(x, y2, z, bty="b2", pch = 19, cex = 1, cex.axis = 0.6,
                       colkey = list(length = 0.5, width = 0.5, cex.clab = 0.8, cex.axis = 0.8),
                       xlim = c(0, max(x.pred_m)), zlim = c(0,max(z.pred_m)*1.5),
@@ -447,9 +442,6 @@ knobi_env <- function( knobi_results, data, control=NULL, plot_out=FALSE, plot_f
       grDevices::replayPlot(plot3d_mult)
       grDevices::dev.off()
     }
-
-    cat(paste0("\n ... Done! :) \n"))
-
 
     res_env$plots3D <- list(additive_plot=plot3d_add,multiplicative_plot=plot3d_mult)
 
@@ -499,11 +491,6 @@ knobi_env <- function( knobi_results, data, control=NULL, plot_out=FALSE, plot_f
   envdf <- envdf
 
   res_env$df <- envdf
-
-  if (plot_out==TRUE){
-    cat(paste0("\n Plots successfully saved in '",getwd(),"'"),". \n")
-    setwd(old_dir)
-  }
 
   class( res_env) <- 'knobi'
 

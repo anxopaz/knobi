@@ -35,7 +35,7 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' library(knobi)
 #'
@@ -74,6 +74,7 @@ knobi_retro <- function( knobi_results, env_results=NULL, nR=5, yR=NULL, yR0=NUL
   if(plot_out==T){
     
     old_dir <- getwd()
+    on.exit( setwd(old_dir))
     
     if (is.null(plot_dir)) plot_dir <- knobi_results$control$plot_settings$plot_dir
     setwd(plot_dir)
@@ -188,7 +189,6 @@ knobi_retro <- function( knobi_results, env_results=NULL, nR=5, yR=NULL, yR0=NUL
       grDevices::replayPlot(p)
       grDevices::dev.off()
       
-      cat(paste0("Plot successfully saved in '",getwd(),"'"),"\n")
       setwd(old_dir)
       
     }
@@ -294,9 +294,6 @@ knobi_retro <- function( knobi_results, env_results=NULL, nR=5, yR=NULL, yR0=NUL
       grDevices::jpeg("fits_retro.jpeg",width=2500, height=2500,res=300)
       grDevices::replayPlot(p)
       grDevices::dev.off()
-      
-      cat(paste0("Plot successfully saved in '",getwd(),"'"),"\n")
-      setwd(old_dir)
       
     }
     
