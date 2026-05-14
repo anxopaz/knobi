@@ -30,6 +30,11 @@
 #'
 #' \donttest{
 #'
+#' library(knobi)
+#' data(knobi_results) # loading results of the knobi_fit example
+#' data(knobi_environmental) # loading results of the knobi_env example
+#' data(knobi_dataset)
+#'
 #' ### Projecting through catch with no environmental information
 #'
 #' # Then, create the data frame containing the selected catch for the projected
@@ -62,6 +67,7 @@
 #' # (ii) Constant AMO equal to last year's AMO with a 50% increment
 #' # (iii) Constant AMO equal to last year's AMO with a 50% decrease
 #'
+#' Env <- knobi_dataset$Env
 #' last_AMO <- Env$AMO[length(Env$AMO)]
 #' env <- data.frame( AMOi=rep(last_AMO,5),
 #'                    AMOii=rep(last_AMO*1.5,5),
