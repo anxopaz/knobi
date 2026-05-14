@@ -30,6 +30,10 @@
 #'
 #' \donttest{
 #'
+#' library(knobi)
+#' data(knobi_results) # loading results of the knobi_fit example
+#' data(knobi_environmental) # loading results of the knobi_env example
+#'
 #' ### Projecting through catch with no environmental information
 #'
 #' # Then, create the data frame containing the selected catch for the projected
