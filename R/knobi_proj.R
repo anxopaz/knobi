@@ -93,18 +93,18 @@
 #'
 #' ### Through fishing mortality with environmental information
 #'
-#' knobi_proj(knobi_results, f=f[1:5,], env_results=env_results, env=env)
+#' knobi_proj(knobi_results, f=f[1:5,], env_results=knobi_environmental, env=env)
 #'
 #'
 #' # In case of multicovar<-TRUE in knobi_env, a list is required in which
 #' # each item is a data frame for each environmental scenario
 #'
-#' env<-list(climate_1=data.frame(AMO=c(0.2,0.2,0.3,0.3,0.4),
-#'                               NAO=c(0.2,0.2,0.3,0.3,0.4)),
-#'           climate_2=data.frame(AMO=c(0.2,0.3,0.4,0.5,0.6),
-#'                               NAO=c(0.2,0.2,0.3,0.3,0.4)))
-#'
-#' knobi_proj(knobi_results, knobi_environmental2, c=C, env=env)
+#' # env<-list(climate_1=data.frame(AMO=c(0.2,0.2,0.3,0.3,0.4),
+#' #                                NAO=c(0.2,0.2,0.3,0.3,0.4)),
+#' #           climate_2=data.frame(AMO=c(0.2,0.3,0.4,0.5,0.6),
+#' #                                NAO=c(0.2,0.2,0.3,0.3,0.4)))
+#' # 
+#' # knobi_proj(knobi_results, knobi_environmental2, c=C, env=env)
 #' }
 #'
 #' @export
