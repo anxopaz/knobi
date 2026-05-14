@@ -46,7 +46,7 @@ library(knobi)
 # See knobi_fit example to obtain the knobi_results object
 data(knobi_results) # loading results of the knobi_fit example
 
-knobi_retrospectives<-knobi_retro(knobi_results,plot_out=T)  # default nR=5
+knobi_retrospectives<-knobi_retro(knobi_results)  # default nR=5
 knobi_retrospectives
 
 knobi_retro(knobi_results,nR=3)
